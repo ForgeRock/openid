@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OpenID Connect Basic Client Profile</title>
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="basic.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var url = server + openam + authorize + "?" + encodeQueryData(params);
+            $("#link").attr("href", url);
+        });
+    </script>
+</head>
+<body>
+
+<b>Basic Client Profile Start Page</b>
+<p>Try OpenAM as an OpenID Connect provider using the
+   <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
+   target="_blank">Basic Client Profile</a>.</p>
+
+<p>After you have configured everything, click the link below to start the
+   authorization process.</p>
+
+<p></p><a id="link" href="http://not.set">Start authorization</a></p>
+
+</body>
+</html>

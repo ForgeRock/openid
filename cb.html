@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OpenID Connect Basic Client Profile</title>
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="basic.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Use the authorization code to get an access token.
+
+            var code = getParameterByName("code");
+            var access_token = "undefined";
+
+            $.ajax({
+                url: server + openam + access,
+                type: "POST",
+                headers: {
+                    "Authorization": authHeader(client_id, client_secret)
+                },
+                data: {
+                    "grant_type": "authorization_code",
+                    "code": code,
+                    "redirect_uri": redirect_uri
+                },
+                dataType: "json"
+            }).done(function(data) {
+                $("#token").html(
+                    "<b>Access Token</b>"
+                    + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
+                );
+
+                // TODO: validate the ID Token
+
+                // Use the access token to get token information.
+                var access_token = data.access_token.toString();
+                var url = server + openam + info
+                        + "?access_token=" + access_token;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+                    $("#info").html(
+                        "<b>Token Info</b>"
+                        + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
+                    );
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="token"></div>
+
+<div id="info"></div>
+
+<div>Back to the <a href="index.html">start page</a></div>
+</body>
+</html>
