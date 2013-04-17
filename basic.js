@@ -20,7 +20,7 @@ var redirect_uri = server + "/openid/cb.html";
 
 var params = {
     "response_type": "code",
-    "scope": "openid profile cn",
+    "scope": "openid profile",
     "client_id": client_id,
     "redirect_uri": redirect_uri,
     "state": 1234
