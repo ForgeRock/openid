@@ -11,7 +11,7 @@ var server = proto + "://" + host + ":" + port;
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
 var access = "/oauth2/access_token";
-var info = "/oauth2/tokeninfo";
+var info = "/oauth2/tokeninfo"; // Wrong endpoint for OpenID Connect?
 
 // Client ID, secret, and redirect
 var client_id = "myClientID";
