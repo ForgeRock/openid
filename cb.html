@@ -12,7 +12,12 @@
             // Use the authorization code to get an access token.
 
             var code = getParameterByName("code");
-            var access_token = "undefined";
+            var state = getParameterByName("state");
+            $("#code").html("<h3>From Provider</h3>"
+                    + "<p>Code: <code>" + code + "</code></p>"
+                    + "<p>State: <code>" + state + "</code></p>");
+
+            var access_token = getParameterByName("");
 
             $.ajax({
                 url: server + openam + access,
@@ -21,14 +26,14 @@
                     "Authorization": authHeader(client_id, client_secret)
                 },
                 data: {
-                    "grant_type": "authorization_code",
                     "code": code,
+                    "grant_type": "authorization_code",
                     "redirect_uri": redirect_uri
                 },
                 dataType: "json"
             }).done(function(data) {
                 $("#token").html(
-                    "<b>Access Token</b>"
+                    "<h3>Access Token</h3>"
                     + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
                 );
 
@@ -44,7 +49,7 @@
                     dataType: "json"
                 }).done(function (data) {
                     $("#info").html(
-                        "<b>Token Info</b>"
+                        "<h3>Token Info</h3>"
                         + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
                     );
                 });
@@ -54,9 +59,11 @@
 </head>
 <body>
 
-<div id="token"></div>
+<div id="code">code goes here</div>
 
-<div id="info"></div>
+<div id="token">token goes here</div>
+
+<div id="info">info goes here</div>
 
 <div>Back to the <a href="index.html">start page</a></div>
 </body>

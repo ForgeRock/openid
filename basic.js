@@ -13,17 +13,18 @@ var authorize = "/oauth2/authorize";
 var access = "/oauth2/access_token";
 var info = "/oauth2/tokeninfo"; // Wrong endpoint for OpenID Connect?
 
-// Client ID, secret, and redirect
+// Client ID, secret, redirect, state
 var client_id = "myClientID";
 var client_secret = "password";
 var redirect_uri = server + "/openid/cb.html";
+var state = 1234;
 
 var params = {
     "response_type": "code",
-    "scope": "openid profile",
+    "scope": "openid",
     "client_id": client_id,
     "redirect_uri": redirect_uri,
-    "state": 1234
+    "state": state
 };
 
 // ...END CONFIGURATION
