@@ -21,10 +21,26 @@
    <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
    target="_blank">Basic Client Profile</a>.</p>
 
-<p>After you have configured everything, click the link below to start the
-   authorization process.</p>
+<div id="config"></div>
 
 <p></p><a id="link" href="http://not.set">Start authorization</a></p>
+
+<script>
+    $("#config").html(
+            "<hr>"
+                + "<p>OpenAM should be running and configured as an OpenID Connect "
+                + "Provider in the same container as this application.</p>"
+                + "<p>Current settings in <code>basic.js</code>:</p>"
+                + "<table style='width: 100%'>"
+                + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
+                + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
+                + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
+                + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
+                + "</table>"
+                + "<p>After you have configured everything, log out of OpenAM. "
+                + "Then click the link to start the authorization process.</p>"
+    );
+</script>
 
 </body>
 </html>
