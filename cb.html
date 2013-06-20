@@ -52,8 +52,8 @@
                             authHeader(client_id, client_secret));
                 },
                 data: {
-                    "code": code,
                     "grant_type": "authorization_code",
+                    "code": code,
                     "redirect_uri": redirect_uri
                 },
                 accepts: "json"
