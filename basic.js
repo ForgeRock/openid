@@ -1,6 +1,20 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * If applicable, add the following below this MPL 2.0 HEADER, replacing
+ * the fields enclosed by brackets "[]" replaced with your own identifying
+ * information:
+ *     Portions Copyright [yyyy] [name of copyright owner]
+ *
+ *     Copyright 2013 ForgeRock AS
+ *
+ */
 // START CONFIGURATION...
 
-// In theory, you MUST protect the transport.
+// To avoid cross-site scripting questions, this demo should be in the
+// same container as the OpenID Connect provider (OpenAM).
 function getBaseURL() {
     var protocol = window.location.protocol;
     var hostname = window.location.hostname;
@@ -9,26 +23,18 @@ function getBaseURL() {
 }
 var server = getBaseURL();
 
-// OpenAM deployed under /openam
+// OpenAM is assumed to be deployed under /openam.
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
 var access = "/oauth2/access_token";
 var info = "/oauth2/tokeninfo"; // Wrong endpoint for OpenID Connect?
 
-// Client ID, secret, redirect, state
+// Client ID, secret, redirect_uri, state
 var openid = "/openid";
 var client_id = "myClientID";
 var client_secret = "password";
 var redirect_uri = server + openid + "/cb.html";
 var state = 1234;
-
-var params = {
-    "response_type": "code",
-    "scope": "openid",
-    "client_id": client_id,
-    "redirect_uri": redirect_uri,
-    "state": state
-};
 
 // ...END CONFIGURATION
 
@@ -47,7 +53,7 @@ function getParameterByName(name) {
     var regexS = "[\\?&]" + name + "=([^&#]*)";
     var regex = new RegExp(regexS);
     var results = regex.exec(window.location.search);
-    if(results == null)
+    if (results == null)
         return "";
     else
         return decodeURIComponent(results[1].replace(/\+/g, " "));

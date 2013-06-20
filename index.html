@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OpenID Connect Basic Client Profile</title>
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var url = server + openam + authorize + "?" + encodeQueryData(params);
-            $("#link").attr("href", url);
-        });
-    </script>
 </head>
 <body>
 
-<b>Basic Client Profile Start Page</b>
+<h3>Basic Client Profile Start Page</h3>
 <p>Try OpenAM as an OpenID Connect provider using the
    <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
    target="_blank">Basic Client Profile</a>.</p>
 
 <div id="config"></div>
 
-<p></p><a id="link" href="http://not.set">Start authorization</a></p>
+<p><a id="link" href="#">Start authorization</a></p>
 
-<script>
+<script type="text/javascript">
+    var authRequestParameters = {
+        "response_type": "code",
+        "client_id": client_id,
+        "scope": "openid",
+        "redirect_uri": redirect_uri,
+        "state": state
+    };
+
+    var url = server + openam + authorize + "?"
+            + encodeQueryData(authRequestParameters);
+    $("#link").attr("href", url);
+
     $("#config").html(
             "<hr>"
-                + "<p>OpenAM should be running and configured as an OpenID Connect "
-                + "Provider in the same container as this application.</p>"
-                + "<p>Current settings in <code>basic.js</code>:</p>"
-                + "<table style='width: 100%'>"
-                + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
-                + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
-                + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
-                + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
-                + "</table>"
-                + "<p>After you have configured everything, log out of OpenAM. "
-                + "Then click the link to start the authorization process.</p>"
+                    + "<p>OpenAM should be running and configured as an "
+                    + "OpenID Connect Provider in the same container as this "
+                    + "application.</p>"
+                    + "<p>Current settings in <code>basic.js</code>:</p>"
+                    + "<table style='width: 100%'>"
+                    + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
+                    + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
+                    + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
+                    + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
+                    + "</table>"
+                    + "<p>After you have configured everything, log out of "
+                    + "OpenAM. Then click the link to start the authorization "
+                    + "process.</p>"
     );
 </script>
 

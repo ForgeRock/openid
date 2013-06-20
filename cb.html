@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OpenID Connect Basic Client Profile</title>
@@ -8,17 +25,19 @@
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             var code = getParameterByName("code");
             var state = getParameterByName("state");
             if (code != "" && state != "") {
                 $("#code").html("<h3>Authorization Code</h3>"
-                    + "<p>Code: <code>" + code + "</code></p>"
-                    + "<p>State: <code>" + state + "</code></p>");
+                        + "<p>Code: <code>" + code + "</code></p>"
+                        + "<p>State: <code>" + state + "</code></p>");
             } else {
                 $("#info").html(
-                    "<p>Error obtaining authorization code:</p><pre>"
-                        + JSON.stringify(data, undefined, 2) + "</pre>"
+                        "<p>Error obtaining authorization code:</p>"
+                                + "<pre>"
+                                + JSON.stringify(data, undefined, 2)
+                                + "</pre>"
                 );
                 return;
             }
@@ -37,39 +56,49 @@
                     "redirect_uri": redirect_uri
                 },
                 accepts: "json"
-            }).success(function(data) {
-                $("#token").html(
-                    "<h3>Access Token</h3>"
-                    + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
-                );
+            }).success(function (data) {
+                        $("#token").html(
+                                "<h3>Access Token</h3>"
+                                        + "<pre>"
+                                        + JSON.stringify(data, undefined, 2)
+                                        + "</pre>"
+                        );
 
-                // TODO: validate the ID Token?
+                        // TODO: validate the ID Token?
 
-                // Use the access token to get token information.
-                var access_token = data.access_token.toString();
-                var url = server + openam + info
-                        + "?access_token=" + access_token;
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    accepts: "json"
-                }).success(function (data) {
-                    $("#info").html(
-                        "<h3>Token Info</h3>"
-                        + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
-                    );
-                }).error(function(data) {
-                    $("#info").html(
-                            "<p>Error obtaining token info:</p><pre>"
-                                    + JSON.stringify(data, undefined, 2) + "</pre>"
-                    );
-                });
-            }).error(function(data) {
-                 $("#info").html(
-                    "<p>Error obtaining access token:</p><pre>"
-                        + JSON.stringify(data, undefined, 2) + "</pre>"
-                 );
-            });
+                        // Use the access token to get token information.
+                        var access_token = data.access_token.toString();
+                        var url = server + openam + info
+                                + "?access_token=" + access_token;
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            accepts: "json"
+                        }).success(function (data) {
+                                    $("#info").html(
+                                            "<h3>Token Info</h3>"
+                                                    + "<pre>"
+                                                    + JSON.stringify(
+                                                        data, undefined, 2)
+                                                    + "</pre>"
+                                    );
+                                }).error(function (data) {
+                                    $("#info").html(
+                                            "<p>Error obtaining token info:</p>"
+                                                    + "<pre>"
+                                                    + JSON.stringify(
+                                                        data, undefined, 2)
+                                                    + "</pre>"
+                                    );
+                                });
+                    }).error(function (data) {
+                        $("#info").html(
+                                "<p>Error obtaining access token:</p>"
+                                        + "<pre>"
+                                        + JSON.stringify(data, undefined, 2)
+                                        + "</pre>"
+                        );
+                    });
         });
     </script>
 </head>
@@ -81,6 +110,6 @@
 
 <div id="info"><!-- info goes here --></div>
 
-<div>Back to the <a href="index.html">start page</a></div>
+<div><hr>Back to the <a href="index.html">start page</a></div>
 </body>
 </html>
