@@ -61,6 +61,7 @@ function getParameterByName(name) {
 
 function authHeader(user, password) {
     var tok = user + ':' + password;
-    var hash = btoa(tok);
+    var hash = btoa(tok); // Default: bXlDbGllbnRJRDpwYXNzd29yZA==
+    // console.log("hash: " + hash);
     return "Basic " + hash;
 }
