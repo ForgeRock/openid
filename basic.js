@@ -1,11 +1,13 @@
 // START CONFIGURATION...
 
 // In theory, you MUST protect the transport.
-var proto = "http";
-var host = "openam.example.com";
-var port = 8080;
-
-var server = proto + "://" + host + ":" + port;
+function getBaseURL() {
+    var protocol = window.location.protocol;
+    var hostname = window.location.hostname;
+    var port = window.location.port;
+    return protocol + "//" + hostname + ":" + port;
+}
+var server = getBaseURL();
 
 // OpenAM deployed under /openam
 var openam = "/openam";
@@ -14,9 +16,10 @@ var access = "/oauth2/access_token";
 var info = "/oauth2/tokeninfo"; // Wrong endpoint for OpenID Connect?
 
 // Client ID, secret, redirect, state
+var openid = "/openid";
 var client_id = "myClientID";
 var client_secret = "password";
-var redirect_uri = server + "/openid/cb.html";
+var redirect_uri = server + openid + "/cb.html";
 var state = 1234;
 
 var params = {
