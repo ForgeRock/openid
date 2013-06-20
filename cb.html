@@ -47,8 +47,9 @@
             $.ajax({
                 url: server + openam + access,
                 type: "POST",
-                headers: {
-                    "Authorization": authHeader(client_id, client_secret)
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization",
+                            authHeader(client_id, client_secret));
                 },
                 data: {
                     "code": code,
@@ -56,7 +57,7 @@
                     "redirect_uri": redirect_uri
                 },
                 accepts: "json"
-            }).success(function (data) {
+            }).done(function (data) {
                         $("#token").html(
                                 "<h3>Access Token</h3>"
                                         + "<pre>"
@@ -68,13 +69,10 @@
 
                         // Use the access token to get token information.
                         var access_token = data.access_token.toString();
-                        var url = server + openam + info
-                                + "?access_token=" + access_token;
-                        $.ajax({
-                            url: url,
-                            type: "GET",
-                            accepts: "json"
-                        }).success(function (data) {
+                        $.getJSON({
+                            url: server + openam + info,
+                            data: { "access_token" : access_token }
+                        }).done(function (data) {
                                     $("#info").html(
                                             "<h3>Token Info</h3>"
                                                     + "<pre>"
@@ -82,7 +80,7 @@
                                                         data, undefined, 2)
                                                     + "</pre>"
                                     );
-                                }).error(function (data) {
+                                }).fail(function (data) {
                                     $("#info").html(
                                             "<p>Error obtaining token info:</p>"
                                                     + "<pre>"
@@ -91,7 +89,7 @@
                                                     + "</pre>"
                                     );
                                 });
-                    }).error(function (data) {
+                    }).fail(function (data) {
                         $("#info").html(
                                 "<p>Error obtaining access token:</p>"
                                         + "<pre>"
