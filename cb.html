@@ -9,16 +9,22 @@
     <script type="text/javascript" src="basic.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            // Use the authorization code to get an access token.
-
             var code = getParameterByName("code");
             var state = getParameterByName("state");
-            $("#code").html("<h3>From Provider</h3>"
+            if (code != "" && state != "") {
+                $("#code").html("<h3>Authorization Code</h3>"
                     + "<p>Code: <code>" + code + "</code></p>"
                     + "<p>State: <code>" + state + "</code></p>");
+            } else {
+                $("#info").html(
+                    "<p>Error obtaining authorization code:</p><pre>"
+                        + JSON.stringify(data, undefined, 2) + "</pre>"
+                );
+                return;
+            }
 
+            // Use authorization code to retrieve access token.
             var access_token = getParameterByName("");
-
             $.ajax({
                 url: server + openam + access,
                 type: "POST",
@@ -30,14 +36,14 @@
                     "grant_type": "authorization_code",
                     "redirect_uri": redirect_uri
                 },
-                dataType: "json"
-            }).done(function(data) {
+                accepts: "json"
+            }).success(function(data) {
                 $("#token").html(
                     "<h3>Access Token</h3>"
                     + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
                 );
 
-                // TODO: validate the ID Token
+                // TODO: validate the ID Token?
 
                 // Use the access token to get token information.
                 var access_token = data.access_token.toString();
@@ -46,24 +52,34 @@
                 $.ajax({
                     url: url,
                     type: "GET",
-                    dataType: "json"
-                }).done(function (data) {
+                    accepts: "json"
+                }).success(function (data) {
                     $("#info").html(
                         "<h3>Token Info</h3>"
                         + "<pre>"+JSON.stringify(data, undefined, 2)+"</pre>"
                     );
+                }).error(function(data) {
+                    $("#info").html(
+                            "<p>Error obtaining token info:</p><pre>"
+                                    + JSON.stringify(data, undefined, 2) + "</pre>"
+                    );
                 });
+            }).error(function(data) {
+                 $("#info").html(
+                    "<p>Error obtaining access token:</p><pre>"
+                        + JSON.stringify(data, undefined, 2) + "</pre>"
+                 );
             });
         });
     </script>
 </head>
 <body>
 
-<div id="code">code goes here</div>
+<div id="code"><!-- code goes here --></div>
 
-<div id="token">token goes here</div>
+<div id="token"><!-- token goes here --></div>
 
-<div id="info">info goes here</div>
+<div id="info"><!-- info goes here --></div>
 
 <div>Back to the <a href="index.html">start page</a></div>
 </body>
