@@ -26,8 +26,8 @@ var server = getBaseURL();
 // OpenAM is assumed to be deployed under /openam.
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
-var access = "/oauth2/access_token";
-var info = "/oauth2/tokeninfo"; // Wrong endpoint for OpenID Connect?
+var access = "/oauth2/authorize"; //"/oauth2/access_token";
+var info = "/oauth2/userinfo"; // Wrong endpoint for OpenID Connect?
 
 // Client ID, secret, redirect_uri, state
 var openid = "/openid";
