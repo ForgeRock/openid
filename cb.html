@@ -21,6 +21,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OpenID Connect Basic Client Profile</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
@@ -40,7 +42,7 @@
             }
 
             $("#disclaimer").html(
-                    "Note: No validation done in this simple example.");
+                    "Note: No validation done in this simple example.<hr>");
 
 
             var idToken = params["id_token"];
@@ -84,7 +86,7 @@
 
 <div id="disclaimer"></div>
 
-<div id="code"><!-- code goes here --></div>
+<div id="code" style="word-wrap: break-word;"><!-- code goes here --></div>
 
 <div id="token"><!-- token goes here --></div>
 
