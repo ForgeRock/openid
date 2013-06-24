@@ -26,13 +26,6 @@
     <script type="text/javascript" src="basic.js"></script>
     <script type="text/javascript">
 
-// When using response_type=code%20token, actually what comes back is a code
-// and access token in the fragment, e.g.
-// #code=4dee1d94-6aff-4cd7-8838-2fe0de677ec1&access_token=7121305b-732c-43af-8e5b-f740f6577a34&expires_in=59&token_type=Bearer&state=af0ifjsldkj
-
-// So all this getting the access_token does not need to be done that way.
-// Maybe not the basic profile, but it might work... TODO...
-
         $(document).ready(function () {
             var code = getParameterByName("code");
             var state = getParameterByName("state");
@@ -79,9 +72,12 @@
                         var access_token = data.access_token.toString();
                         $.getJSON({
                             url: server + openam + info,
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("Authorization",
+                                        "Bearer " + access_token);
+                            },
                             data: {
-                                "access_token" : access_token,
-                                "scope": "openid profile" // not really sure what
+                                "scope": "openid profile"
                             }
                         }).done(function (data) {
                                     $("#info").html(

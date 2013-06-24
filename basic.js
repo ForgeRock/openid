@@ -27,7 +27,7 @@ var server = getBaseURL();
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
 var access = "/oauth2/authorize"; //"/oauth2/access_token";
-var info = "/oauth2/userinfo"; // Wrong endpoint for OpenID Connect?
+var info = "/oauth2/userinfo";
 
 // Client ID, secret, redirect_uri, state
 var openid = "/openid";
