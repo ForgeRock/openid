@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OpenID Connect Client Registration</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="basic.js"></script>
+</head>
+<body>
+
+<h3>Client Registration Page</h3>
+
+<p>This page serves to register an OpenID Connect 1.0 client with OpenAM.</p>
+
+<form id="form" method="POST">
+    <label>OpenAM URL</label>
+    <input id="base" value="http://openam.example.com:8080/openam"
+           name="base" type="text" size="80" />
+    <button type="submit">Submit</button>
+</form>
+
+<hr />
+
+<div id="info"></div>
+
+<script type="text/javascript">
+    $("#form").submit(function() {
+        var configURL = $("#base").val() + "/.well-known/openid-configuration";
+        $.ajax({
+            url: configURL
+        }).done(function (data) {
+                    $("#info").html(
+                            "<h3>Provider Configuration</h3>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                }).fail(function (data) {
+                    $("#info").html(
+                            "<p>Error obtaining provider configuration:</p>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                });
+        return false;
+    });
+</script>
+
+</body>
+</html>
