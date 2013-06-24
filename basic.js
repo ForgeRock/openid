@@ -26,7 +26,7 @@ var server = getBaseURL();
 // OpenAM is assumed to be deployed under /openam.
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
-var access = "/oauth2/authorize"; //"/oauth2/access_token";
+var access = "/oauth2/authorize"; // Not used in this example.
 var info = "/oauth2/userinfo";
 
 // Client ID, secret, redirect_uri, state
@@ -56,22 +56,4 @@ function getParamsFromFragment() {
         params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     return params;
-}
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regexS = "[\\?&]" + name + "=([^&#]*)";
-    var regex = new RegExp(regexS);
-    var results = regex.exec(window.location.search);
-    if (results == null)
-        return "";
-    else
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function authHeader(user, password) {
-    var tok = user + ':' + password;
-    var hash = btoa(tok); // Default: bXlDbGllbnRJRDpwYXNzd29yZA==
-    // console.log("hash: " + hash);
-    return "Basic " + hash;
 }

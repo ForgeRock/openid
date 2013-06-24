@@ -48,7 +48,7 @@
             var idToken = params["id_token"];
             idToken = idToken.split(/\./);
             idToken = atob(idToken[1]);
-            $("#token").html("<h3>Decoded ID Token</h3>"
+            $("#token").html("<h3>Decoded ID Token Content</h3>"
                     + "<pre>"
                     + JSON.stringify(JSON.parse(idToken), undefined, 2)
                     + "</pre>"
@@ -65,20 +65,20 @@
                     "scope": "openid profile"
                 }
             }).done(function (data) {
-                        $("#info").html(
-                                "<h3>Token Info</h3>"
-                                        + "<pre>"
-                                        + JSON.stringify(data, undefined, 2)
-                                        + "</pre>"
-                        );
-                    }).fail(function (data) {
-                        $("#info").html(
-                                "<p>Error obtaining token info:</p>"
-                                        + "<pre>"
-                                        + JSON.stringify(data, undefined, 2)
-                                        + "</pre>"
-                        );
-                    });
+                    $("#info").html(
+                            "<h3>Profile Information</h3>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                }).fail(function (data) {
+                    $("#info").html(
+                            "<p>Error obtaining token info:</p>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                });
         });
     </script>
 </head>

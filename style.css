@@ -31,3 +31,16 @@ body {
     outline: 0;
     padding: 0px 0px 0px 0px;
 }
+
+pre {
+    background-color: #eee;
+    color: #000;
+    border: 1px dashed #ccc;
+    padding: 5px;
+}
+
+hr {
+    border: 0;
+    border-bottom: 1px dashed #eee;
+    background: #ccc;
+}
