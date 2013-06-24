@@ -48,6 +48,16 @@ function encodeQueryData(data) {
     return ret.join("&");
 }
 
+function getParamsFromFragment() {
+    var params = {};
+    var postBody = location.hash.substring(1);
+    var regex = /([^&=]+)=([^&]*)/g, m;
+    while (m = regex.exec(postBody)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+    return params;
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regexS = "[\\?&]" + name + "=([^&#]*)";

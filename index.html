@@ -20,17 +20,17 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>OpenID Connect Basic Client Profile</title>
+    <title>OpenID Connect Implicit Client Profile</title>
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
 </head>
 <body>
 
-<h3>Basic Client Profile Start Page</h3>
+<h3>Implicit Client Profile Start Page</h3>
 <p>Try OpenAM as an OpenID Connect provider using the
-   <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
-   target="_blank">Basic Client Profile</a>.</p>
+   <a href="http://openid.net/specs/openid-connect-implicit-1_0.html"
+   target="_blank">Implicit Client Profile</a>.</p>
 
 <div id="config"></div>
 
@@ -38,11 +38,12 @@
 
 <script type="text/javascript">
     var authRequestParameters = {
-        "response_type": "code",
+        "response_type": "id_token token",
         "client_id": client_id,
-        "scope": "openid",
+        "scope": "openid profile",
         "redirect_uri": redirect_uri,
-        "state": state
+        "state": state,
+        "nonce": "n-0S6_WzA2Mj"
     };
 
     var url = server + openam + authorize + "?"

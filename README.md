@@ -1,4 +1,6 @@
-TODO... The aim is to get my head around OpenID Connect support in OpenAM.
+This simple JavaScript client tries the OpenID Connect Implicit Client
+Profile 1.0 with OpenAM to show an example that gets profile information
+about the end user.
 
 * * *
 This Source Code Form is subject to the terms of the Mozilla Public

@@ -27,78 +27,51 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            var code = getParameterByName("code");
-            var state = getParameterByName("state");
-            if (code != "" && state != "") {
-                $("#code").html("<h3>Authorization Code</h3>"
-                        + "<p>Code: <code>" + code + "</code></p>"
-                        + "<p>State: <code>" + state + "</code></p>");
-            } else {
-                $("#info").html(
-                        "<p>Error obtaining authorization code:</p>"
-                                + "<pre>"
-                                + JSON.stringify(data, undefined, 2)
-                                + "</pre>"
+            var params = getParamsFromFragment();
+            if (params != undefined) {
+                $("#code").html("<h3>Response From Provider</h3>"
+                        + "<pre>"
+                        + JSON.stringify(params, undefined, 2)
+                        + "</pre>"
                 );
+            } else {
+                $("#info").html("<p>Error obtaining response.</p>");
                 return;
             }
 
-            // Use authorization code to retrieve access token.
-            var access_token = getParameterByName("");
+            $("#disclaimer").html(
+                    "Note: No validation done in this simple example.");
+
+
+            var idToken = params["id_token"];
+            idToken = idToken.split(/\./);
+            idToken = atob(idToken[1]);
+            $("#token").html("<h3>Decoded ID Token</h3>"
+                    + "<pre>"
+                    + JSON.stringify(JSON.parse(idToken), undefined, 2)
+                    + "</pre>"
+            );
+
+
             $.ajax({
-                url: server + openam + access,
-                type: "POST",
+                url: server + openam + info,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization",
-                            authHeader(client_id, client_secret));
+                            "Bearer " + params["access_token"]);
                 },
                 data: {
-                    "grant_type": "authorization_code",
-                    "code": code,
-                    "redirect_uri": redirect_uri
-                },
-                accepts: "json"
+                    "scope": "openid profile"
+                }
             }).done(function (data) {
-                        $("#token").html(
-                                "<h3>Access Token</h3>"
+                        $("#info").html(
+                                "<h3>Token Info</h3>"
                                         + "<pre>"
                                         + JSON.stringify(data, undefined, 2)
                                         + "</pre>"
                         );
-
-                        // TODO: validate the ID Token?
-
-                        // Use the access token to get token information.
-                        var access_token = data.access_token.toString();
-                        $.getJSON({
-                            url: server + openam + info,
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader("Authorization",
-                                        "Bearer " + access_token);
-                            },
-                            data: {
-                                "scope": "openid profile"
-                            }
-                        }).done(function (data) {
-                                    $("#info").html(
-                                            "<h3>Token Info</h3>"
-                                                    + "<pre>"
-                                                    + JSON.stringify(
-                                                        data, undefined, 2)
-                                                    + "</pre>"
-                                    );
-                                }).fail(function (data) {
-                                    $("#info").html(
-                                            "<p>Error obtaining token info:</p>"
-                                                    + "<pre>"
-                                                    + JSON.stringify(
-                                                        data, undefined, 2)
-                                                    + "</pre>"
-                                    );
-                                });
                     }).fail(function (data) {
                         $("#info").html(
-                                "<p>Error obtaining access token:</p>"
+                                "<p>Error obtaining token info:</p>"
                                         + "<pre>"
                                         + JSON.stringify(data, undefined, 2)
                                         + "</pre>"
@@ -108,6 +81,8 @@
     </script>
 </head>
 <body>
+
+<div id="disclaimer"></div>
 
 <div id="code"><!-- code goes here --></div>
 
