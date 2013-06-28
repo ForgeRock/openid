@@ -44,7 +44,7 @@
                 return;
             }
 
-            // Use authorization code to retrieve access token.
+            // Use authorization code to retrieve access token & id_token.
             $.ajax({
                 url: server + openam + access,
                 type: "POST",
@@ -66,7 +66,52 @@
                                         + "</pre>"
                         );
 
-                        // TODO: validate the ID Token?
+                        var idToken = data.id_token;
+                        idToken = idToken.split(/\./);
+                        idToken = JSON.parse(atob(idToken[1]));
+                        $("#decoded").html("<h3>Decoded ID Token Content</h3>"
+                                + "<pre>"
+                                + JSON.stringify(idToken, undefined, 2)
+                                + "</pre>"
+                        );
+
+                        // Validate id_token
+                        if (idToken.iss != server + openam) {
+                            $("#info").html("Invalid id_token issuer: "
+                                    + idToken.iss);
+                            return;
+                        }
+
+                        if (
+                                (
+                                    idToken.aud instanceof Array
+                                        && idToken.aud.indexOf(client_id) == -1
+                                )
+                                    || (idToken.aud != client_id)) {
+                            $("#info").html("Invalid id_token audience: "
+                                    + idToken.aud);
+                            return;
+                        }
+
+                        if (idToken.aud instanceof Array
+                                && idToken.azp != client_id) {
+                            $("#info").html(
+                                    "Invalid id_token authorized party: "
+                                    + idToken.azp);
+                            return;
+                        }
+
+                        var now = new Date().getTime() / 1000;
+                        if (now >= idToken.exp) {
+                            $("#info").html("The id_token has expired.");
+                            return;
+                        }
+
+                        // Ignoring iat (JWT issued at time)
+
+                        // acr (Authentication Context Class Reference) not requested
+
+                        // max_age not requested
 
                         // Use the access token to get user information.
                         var access_token = data.access_token.toString();
@@ -112,6 +157,8 @@
 <div id="code"><!-- code goes here --></div>
 
 <div id="token"><!-- token goes here --></div>
+
+<div id="decoded"><!-- decoded id_token goes here --></div>
 
 <div id="info"><!-- info goes here --></div>
 
