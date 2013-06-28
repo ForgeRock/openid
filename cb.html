@@ -77,7 +77,7 @@
                                         "Bearer " + access_token);
                             },
                             data: {
-                                "scope": "openid profile" // Not in draft 28
+                                "scope": "openid profile" // Only in authz request?
                             }
                         }).done(function (data) {
                                     $("#info").html(
