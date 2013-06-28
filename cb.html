@@ -60,7 +60,7 @@
                 accepts: "json"
             }).done(function (data) {
                         $("#token").html(
-                                "<h3>Access Token</h3>"
+                                "<h3>Token Response</h3>"
                                         + "<pre>"
                                         + JSON.stringify(data, undefined, 2)
                                         + "</pre>"
@@ -68,7 +68,7 @@
 
                         // TODO: validate the ID Token?
 
-                        // Use the access token to get token information.
+                        // Use the access token to get user information.
                         var access_token = data.access_token.toString();
                         $.getJSON({
                             url: server + openam + info,
@@ -77,11 +77,11 @@
                                         "Bearer " + access_token);
                             },
                             data: {
-                                "scope": "openid profile"
+                                "scope": "openid profile" // Not in draft 28
                             }
                         }).done(function (data) {
                                     $("#info").html(
-                                            "<h3>Token Info</h3>"
+                                            "<h3>End User Info</h3>"
                                                     + "<pre>"
                                                     + JSON.stringify(
                                                         data, undefined, 2)
@@ -89,7 +89,7 @@
                                     );
                                 }).fail(function (data) {
                                     $("#info").html(
-                                            "<p>Error obtaining token info:</p>"
+                                            "<p>Error obtaining user info:</p>"
                                                     + "<pre>"
                                                     + JSON.stringify(
                                                         data, undefined, 2)
