@@ -30,14 +30,19 @@
 
         $(document).ready(function () {
             var params = getParamsFromFragment();
-            if (params != undefined) {
+            if (params.id_token != undefined) {
                 $("#code").html("<h3>Response From Provider</h3>"
                         + "<pre>"
                         + JSON.stringify(params, undefined, 2)
                         + "</pre>"
                 );
             } else {
-                $("#info").html("<p>Error obtaining response.</p>");
+                var error = parseQueryString();
+                $("#info").html("<h3>Response From Provider</h3>"
+                        + "<pre>"
+                        + JSON.stringify(error, undefined, 2)
+                        + "</pre>"
+                );
                 return;
             }
 
@@ -84,8 +89,6 @@
 
             // Ignoring iat (JWT issued at time)
 
-            console.log(idToken.nonce);
-            console.log(nonce);
             if (idToken.nonce != nonce) {
                 $("#info").html("Invalid id_token nonce: " + idToken.nonce);
                 return;
