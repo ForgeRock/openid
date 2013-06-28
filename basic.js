@@ -35,6 +35,7 @@ var client_id = "myClientID";
 var client_secret = "password";
 var redirect_uri = server + openid + "/cb.html";
 var state = "af0ifjsldkj";
+var nonce = "n-0S6_WzA2Mj";
 
 // ...END CONFIGURATION
 

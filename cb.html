@@ -41,19 +41,59 @@
                 return;
             }
 
-            $("#disclaimer").html(
-                    "Note: No validation done in this simple example.<hr>");
-
-
             var idToken = params["id_token"];
             idToken = idToken.split(/\./);
-            idToken = atob(idToken[1]);
+            idToken = JSON.parse(atob(idToken[1]));
             $("#token").html("<h3>Decoded ID Token Content</h3>"
                     + "<pre>"
-                    + JSON.stringify(JSON.parse(idToken), undefined, 2)
+                    + JSON.stringify(idToken, undefined, 2)
                     + "</pre>"
             );
 
+            // Validate id_token
+            if (
+                    (idToken.aud instanceof Array
+                    && idToken.aud.indexOf(client_id) == -1)
+                    || (idToken.aud != client_id)
+                ) {
+                $("#info").html("Invalid id_token audience: " + idToken.aud);
+                return;
+            }
+
+            if (idToken.aud instanceof Array
+                && idToken.azp != client_id) {
+                $("#info").html("Invalid id_token authorized party: "
+                        + idToken.azp);
+                return;
+            }
+
+            // TODO: Validate id_token signature
+            $("#disclaimer").html(
+                    "Note: No validation done for id_token signatures.<hr>");
+
+            if (idToken.iss != server + openam) {
+                $("#info").html("Invalid id_token issuer: " + idToken.iss);
+                return;
+            }
+
+            var now = new Date().getTime() / 1000;
+            if (now >= idToken.exp) {
+                $("#info").html("The id_token has expired.");
+                return;
+            }
+
+            // Ignoring iat (JWT issued at time)
+
+            console.log(idToken.nonce);
+            console.log(nonce);
+            if (idToken.nonce != nonce) {
+                $("#info").html("Invalid id_token nonce: " + idToken.nonce);
+                return;
+            }
+
+            // acr (Authentication Context Class Reference) not requested
+
+            // max_age not requested
 
             $.ajax({
                 url: server + openam + info,
