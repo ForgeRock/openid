@@ -30,21 +30,21 @@
             var code = getParameterByName("code");
             var state = getParameterByName("state");
             if (code != "" && state != "") {
-                $("#code").html("<h3>Authorization Code</h3>"
+                $("#code").html("<h3>Authorization Code Response</h3>"
                         + "<p>Code: <code>" + code + "</code></p>"
                         + "<p>State: <code>" + state + "</code></p>");
             } else {
+                var error = parseQueryString();
                 $("#info").html(
-                        "<p>Error obtaining authorization code:</p>"
+                        "<h3>Authorization Code Response</h3>"
                                 + "<pre>"
-                                + JSON.stringify(data, undefined, 2)
+                                + JSON.stringify(error, undefined, 2)
                                 + "</pre>"
                 );
                 return;
             }
 
             // Use authorization code to retrieve access token.
-            var access_token = getParameterByName("");
             $.ajax({
                 url: server + openam + access,
                 type: "POST",
