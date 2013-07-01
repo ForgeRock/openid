@@ -1,4 +1,4 @@
-TODO... The aim is to get my head around OpenID Connect support in OpenAM.
+These simple examples show OpenID Connect provider support in OpenAM.
 
 * * *
 This Source Code Form is subject to the terms of the Mozilla Public

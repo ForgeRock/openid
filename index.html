@@ -20,75 +20,31 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>OpenID Connect Basic Client Profile</title>
-    <script type="text/javascript"
-            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="basic.js"></script>
+    <title>OpenID Connect Client Profile Examples</title>
 </head>
 <body>
 
-<div>
-    <a href="http://openam.forgerock.org/">
-        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
-             width="147" height="25" align="right">
-    </a>
-</div>
+<h3>OpenID Connect Client Profiles</h3>
 
-<h3>Basic Client Profile Start Page</h3>
-<p>Try OpenAM as an OpenID Connect provider using the
-   <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
-   target="_blank">Basic Client Profile</a>.</p>
+<p><a href="http://openid.net/connect/">OpenID Connect 1.0</a> defines two
+   client profiles, Basic and Implicit.</p>
 
-<p>OpenID Connect Basic Client Profile 1.0 is designed for web-based
-   relying parties that use the OAuth 2.0 Authorization Code grant type.
-   This grant type makes it possible for the client to get the access code
-   by using the authorization code directly, without passing through the end
-   user's browser. To protect its client secret (password), part of the
-   client must run on the server.</p>
+<p>The Basic Client Profile is designed for web-based relying parties that use
+   the OAuth 2.0 Authorization Code grant type, such as server-side clients
+   that can protect their client credentials.</p>
 
-<p>Note: This example is not designed to protect the client secret, but
-   instead to show the results at each step in the process.</p>
+<p>The Implicit Client Profile is designed for web-based relying parties that
+   use the OAuth 2.0 Implicit grant type, such as browser-based clients written
+   in JavaScript.</p>
 
-<div id="config"></div>
+<p>The examples provided here are both written in JavaScript. Neither aims to
+   protect anything, but instead to show you the steps that each kind of client
+   follows, and the responses from OpenAM as OpenID Connect Provider.</p>
 
-<p><a id="link" href="#">Start authorization</a></p>
-
-<script type="text/javascript">
-    var authRequestParameters = {
-        "response_type": "code",
-        "client_id": client_id,
-        "scope": "openid profile",
-        "redirect_uri": redirect_uri,
-        "state": state
-    };
-
-    var url = server + openam + authorize + "?"
-            + encodeQueryData(authRequestParameters);
-    $("#link").attr("href", url);
-
-    $("#config").html(
-            "<hr>"
-                    + "<p>OpenAM should be running and configured as an "
-                    + "OpenID Connect Provider in the same container as this "
-                    + "application.</p>"
-
-                    + "<p>Current settings in <code>basic.js</code>:</p>"
-                    + "<table style='width: 100%; font-family: monospace'>"
-                    + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
-                    + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
-                    + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
-                    + "</table>"
-
-                    + "<p>In OpenAM, create an OAuth 2.0 agent using the "
-                    + "<code>client_id</code> and <code>client_secret</code>, "
-                    + "then edit the configuration to add the scopes "
-                    + "\"openid\" and  \"profile\".</p>"
-
-                    + "<p>After you have configured everything, log out of "
-                    + "OpenAM. Then click the link to start the authorization "
-                    + "process.</p>"
-    );
-</script>
+<ul>
+    <li>Try the <a href="basic.html">Basic Client Profile</a></li>
+    <li>Try the <a href="implicit.html">Implicit Client Profile</a></li>
+</ul>
 
 </body>
 </html>

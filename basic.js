@@ -33,7 +33,7 @@ var info = "/oauth2/userinfo";
 var openid = "/openid";
 var client_id = "myClientID";
 var client_secret = "password";
-var redirect_uri = server + openid + "/cb.html";
+var redirect_uri = server + openid + "/cb-basic.html";
 var state = "af0ifjsldkj";
 
 // ...END CONFIGURATION
