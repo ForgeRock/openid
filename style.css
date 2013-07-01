@@ -37,6 +37,7 @@ pre {
     color: #000;
     border: 1px dashed #ccc;
     padding: 5px;
+    word-wrap: break-word;
 }
 
 hr {
