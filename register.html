@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OpenID Connect Client Registration</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="implicit.js"></script>
+</head>
+<body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
+
+<h3>Client Registration Page</h3>
+
+<p>This page serves to register an OpenID Connect 1.0 client with OpenAM.</p>
+
+<form id="form" action="#">
+    <label>OpenAM URL
+    <input id="baseUrl" value="http://openam.example.com:8080/openam"
+           name="base" type="text" /></label>
+    <label>Access Token (bearer token to POST registration)
+    <input id="bearerToken" name="bearerToken" type="text" /></label>
+    <button type="submit">Submit</button>
+</form>
+
+<hr />
+
+<div id="config"></div>
+<div id="info"></div>
+
+<script type="text/javascript">
+    $("#form").submit(function () {
+
+        var baseUrl = $("#baseUrl").val();
+        var configurationUrl = baseUrl + "/.well-known/openid-configuration";
+        var registrationUrl = baseUrl + "/oauth2/connect/register"; // Default
+
+        $.ajax({
+            url: configurationUrl,
+            type: "GET"
+        }).done(function (data) {
+                    $("#config").html(
+                            "<h3>Provider Configuration</h3>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                    registrationUrl = data["registration_endpoint"];
+                    console.log(registrationUrl);
+                }).fail(function (data) {
+                    $("#config").html(
+                            "<p>Error obtaining provider configuration at "
+                                    + configurationUrl + "</p>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                    return false;
+                });
+
+        var regData = {
+            "redirect_uris": [ redirect_uri ],
+            "response_types": ["code", "id_token", "token"],
+            "grant_types": ["authorization_code", "implicit"],
+            "client_name": "OpenID Connect Example Client",
+            "client_uri": server + openid
+        };
+
+        if (registrationUrl == "") {
+            return false;
+        }
+
+        var bearerToken = "invalid"; // TODO: Depends on a client to get a token.
+
+        $.ajax({
+            url: registrationUrl,
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + bearerToken);
+            },
+            data: regData
+        }).done(function (data) {
+                    $("#info").html(
+                            "<h3>Registration Response</h3>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                }).fail(function (data) {
+                    $("#info").html(
+                            "<p>Error registering client with provider at "
+                                    + registrationUrl + "</p>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+
+                    );
+                });
+
+        return false;
+    });
+</script>
+
+</body>
+</html>

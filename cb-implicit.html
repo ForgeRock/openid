@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Implicit Client Profile Response Page</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="implicit.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var params = getParamsFromFragment();
+            if (params.id_token != undefined) {
+                $("#code").html("<h3>Response From Provider</h3>"
+                        + "<pre>"
+                        + JSON.stringify(params, undefined, 2)
+                        + "</pre>"
+                );
+            } else {
+                var error = parseQueryString();
+                $("#info").html("<h3>Response From Provider</h3>"
+                        + "<pre>"
+                        + JSON.stringify(error, undefined, 2)
+                        + "</pre>"
+                );
+                return;
+            }
+
+            var idToken = params["id_token"];
+            idToken = idToken.split(/\./);
+            idToken = JSON.parse(atob(idToken[1]));
+            $("#token").html("<h3>Decoded ID Token Content</h3>"
+                    + "<pre>"
+                    + JSON.stringify(idToken, undefined, 2)
+                    + "</pre>"
+            );
+
+            // Validate id_token
+            if (
+                    (idToken.aud instanceof Array
+                    && idToken.aud.indexOf(client_id) == -1)
+                    || (idToken.aud != client_id)
+                ) {
+                $("#info").html("Invalid id_token audience: " + idToken.aud);
+                return;
+            }
+
+            if (idToken.aud instanceof Array
+                && idToken.azp != client_id) {
+                $("#info").html("Invalid id_token authorized party: "
+                        + idToken.azp);
+                return;
+            }
+
+            // TODO: Validate id_token signature
+            $("#disclaimer").html(
+                    "Note: No validation done for id_token signatures.<hr>");
+
+            if (idToken.iss != server + openam) {
+                $("#info").html("Invalid id_token issuer: " + idToken.iss);
+                return;
+            }
+
+            var now = new Date().getTime() / 1000;
+            if (now >= idToken.exp) {
+                $("#info").html("The id_token has expired.");
+                return;
+            }
+
+            // Ignoring iat (JWT issued at time)
+
+            if (idToken.nonce != nonce) {
+                $("#info").html("Invalid id_token nonce: " + idToken.nonce);
+                return;
+            }
+
+            // acr (Authentication Context Class Reference) not requested
+
+            // max_age not requested
+
+            $.ajax({
+                url: server + openam + info,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization",
+                            "Bearer " + params["access_token"]);
+                },
+                data: {
+                    "scope": "openid profile"
+                }
+            }).done(function (data) {
+                    $("#info").html(
+                            "<h3>Profile Information</h3>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                }).fail(function (data) {
+                    $("#info").html(
+                            "<p>Error obtaining token info:</p>"
+                                    + "<pre>"
+                                    + JSON.stringify(data, undefined, 2)
+                                    + "</pre>"
+                    );
+                });
+        });
+    </script>
+</head>
+<body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
+
+<h3>Implicit Client Profile Response Page</h3>
+
+<div id="disclaimer"></div>
+
+<div id="code"><!-- code goes here --></div>
+
+<div id="token"><!-- token goes here --></div>
+
+<div id="info"><!-- info goes here --></div>
+
+<div><hr>Back to the <a href="implicit.html">start page</a></div>
+</body>
+</html>

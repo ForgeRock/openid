@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OpenID Connect Implicit Client Profile</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="implicit.js"></script>
+</head>
+<body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+    <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+         width="147" height="25" align="right">
+    </a>
+</div>
+
+<h3>Implicit Client Profile Start Page</h3>
+<p>This example tries OpenAM as an OpenID Connect provider using the
+   <a href="http://openid.net/specs/openid-connect-implicit-1_0.html"
+   target="_blank">Implicit Client Profile</a>.</p>
+
+<p>OpenID Connect Implicit Client Profile 1.0 is designed for web-based
+   relying parties that use the OAuth 2.0 Implicit grant type. This grant type
+   is designed for clients implemented in a browser. Rather than protect a
+   client secret, the client profile must register a protected redirect URI
+   in advance with the OpenID Provider.</p>
+
+<div id="config"></div>
+
+<p><a id="link" href="#">Start authorization</a></p>
+
+<script type="text/javascript">
+    var authRequestParameters = {
+        "response_type": "id_token token",
+        "client_id": client_id,
+        "scope": "openid profile",
+        "redirect_uri": redirect_uri,
+        "state": state,
+        "nonce": nonce
+    };
+
+    var url = server + openam + authorize + "?"
+            + encodeQueryData(authRequestParameters);
+    $("#link").attr("href", url);
+
+    $("#config").html(
+            "<hr>"
+                    + "<p>OpenAM should be running and configured as an "
+                    + "OpenID Connect Provider in the same container as this "
+                    + "application.</p>"
+
+                    + "<p>Current settings for this example:</p>"
+                    + "<table style='width: 100%; font-family: monospace'>"
+                    + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
+                    + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
+                    + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
+                    + "</table>"
+
+                    + "<p>In OpenAM, create an OAuth 2.0 agent using the "
+                    + "<code>client_id</code>, then edit the configuration to "
+                    + "add the <code>redirect_uri</code>, and scopes \"openid\" "
+                    + "and  \"profile\".</p>"
+
+                    + "<p>After you have configured everything, log out of "
+                    + "OpenAM. Then click the link to start the authorization "
+                    + "process.</p>"
+    );
+</script>
+
+</body>
+</html>
