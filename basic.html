@@ -21,6 +21,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OpenID Connect Basic Client Profile</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
@@ -68,6 +70,8 @@
 
     $("#config").html(
             "<hr>"
+                    + "<h3>Prerequisite Configuration</h3>"
+
                     + "<p>OpenAM should be running and configured as an "
                     + "OpenID Connect Provider in the same container as this "
                     + "application.</p>"

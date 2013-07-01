@@ -1,4 +1,13 @@
-These simple examples show OpenID Connect provider support in OpenAM.
+# OpenID Connect Client Profile Examples
+
+These simple examples use the OpenID Connect provider support in OpenAM.
+
+Neither example is secure. Instead both are completely transparent,
+showing the requests and the steps for the Basic and Implicit Profiles.
+
+TODO
+*   Dynamic registration
+*   Session management
 
 * * *
 This Source Code Form is subject to the terms of the Mozilla Public

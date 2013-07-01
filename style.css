@@ -32,6 +32,10 @@ body {
     padding: 0px 0px 0px 0px;
 }
 
+a {
+    text-decoration: none;
+}
+
 form {
     display: block;
     margin: auto;

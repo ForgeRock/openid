@@ -21,30 +21,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OpenID Connect Client Profile Examples</title>
+    <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
+
 <h3>OpenID Connect Client Profiles</h3>
 
-<p><a href="http://openid.net/connect/">OpenID Connect 1.0</a> defines two
-   client profiles, Basic and Implicit.</p>
+<p><a href="http://openid.net/connect/" target="_blank">OpenID Connect 1.0</a>
+   defines two client profiles.</p>
 
-<p>The Basic Client Profile is designed for web-based relying parties that use
-   the OAuth 2.0 Authorization Code grant type, such as server-side clients
-   that can protect their client credentials.</p>
+   <dl>
+       <dt><em>Basic Client Profile</em></dt>
+       <dd>
+           <p>The Basic Client Profile is designed for web-based relying
+           parties that use the OAuth 2.0 Authorization Code grant type,
+           such as server-side clients that can protect their client
+           credentials.</p>
 
-<p>The Implicit Client Profile is designed for web-based relying parties that
-   use the OAuth 2.0 Implicit grant type, such as browser-based clients written
-   in JavaScript.</p>
+           <p>Try the <a href="basic.html">Basic Client Profile</a>.</p>
+       </dd>
+
+       <dt><em>Implicit Client Profile</em></dt>
+       <dd>
+           <p>The Implicit Client Profile is designed for web-based relying
+           parties that use the OAuth 2.0 Implicit grant type, such as
+           browser-based clients written in JavaScript.</p>
+
+           <p>Try the <a href="implicit.html">Implicit Client Profile</a>.</p>
+       </dd>
+   </dl>
 
 <p>The examples provided here are both written in JavaScript. Neither aims to
    protect anything, but instead to show you the steps that each kind of client
    follows, and the responses from OpenAM as OpenID Connect Provider.</p>
-
-<ul>
-    <li>Try the <a href="basic.html">Basic Client Profile</a></li>
-    <li>Try the <a href="implicit.html">Implicit Client Profile</a></li>
-</ul>
 
 </body>
 </html>
