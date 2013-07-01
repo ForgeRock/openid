@@ -33,7 +33,7 @@ var info = "/oauth2/userinfo";
 var openid = "/openid";
 var client_id = "myClientID";
 // client_secret is not used in the implicit profile
-var redirect_uri = server + openid + "/cb.html";
+var redirect_uri = server + openid + "/cb-implicit.html";
 var state = "af0ifjsldkj";
 var nonce = "n-0S6_WzA2Mj";
 
