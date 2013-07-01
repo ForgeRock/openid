@@ -25,7 +25,8 @@
     <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="implicit.js"></script>
+    <script type="text/javascript" src="common.js"></script>
+    <script type="text/javascript" src="register.js"></script>
 </head>
 <body>
 
@@ -85,7 +86,7 @@
                 });
 
         var regData = {
-            "redirect_uris": [ redirect_uri ],
+            "redirect_uris": redirect_uris,
             "response_types": ["code", "id_token", "token"],
             "grant_types": ["authorization_code", "implicit"],
             "client_name": "OpenID Connect Example Client",

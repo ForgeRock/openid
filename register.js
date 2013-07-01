@@ -14,18 +14,9 @@
 // START CONFIGURATION...
 
 // client_secret is not used in the implicit profile
-var redirect_uri = server + openid + "/cb-implicit.html";
-var state = "af0ifjsldkj";
-var nonce = "n-0S6_WzA2Mj";
+var redirect_uris = [
+    server + openid + "/cb-basic.html",
+    server + openid + "/cb-implicit.html"
+];
 
 // ...END CONFIGURATION
-
-function getParamsFromFragment() {
-    var params = {};
-    var postBody = location.hash.substring(1);
-    var regex = /([^&=]+)=([^&]*)/g, m;
-    while (m = regex.exec(postBody)) {
-        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-    }
-    return params;
-}
