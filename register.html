@@ -25,9 +25,16 @@
     <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="basic.js"></script>
+    <script type="text/javascript" src="implicit.js"></script>
 </head>
 <body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
 
 <h3>Client Registration Page</h3>
 
@@ -87,7 +94,7 @@
             return false;
         }
 
-        var bearerToken = "TODO: Where do I get a token for registration?";
+        var bearerToken = "invalid"; // TODO: Depends on a client to get a token.
         $.ajax({
             url: registrationUrl,
             type: "POST",

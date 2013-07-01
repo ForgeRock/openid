@@ -26,13 +26,13 @@ var server = getBaseURL();
 // OpenAM is assumed to be deployed under /openam.
 var openam = "/openam";
 var authorize = "/oauth2/authorize";
-var access = "/oauth2/authorize"; // Not used in this example.
+// access_token is returned on successful authorization
 var info = "/oauth2/userinfo";
 
-// Client ID, secret, redirect_uri, state
+// Client ID, redirect_uri, state
 var openid = "/openid";
 var client_id = "myClientID";
-var client_secret = "password";
+// client_secret is not used in the implicit profile
 var redirect_uri = server + openid + "/cb.html";
 var state = "af0ifjsldkj";
 var nonce = "n-0S6_WzA2Mj";

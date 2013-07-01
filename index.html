@@ -25,14 +25,27 @@
     <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="basic.js"></script>
+    <script type="text/javascript" src="implicit.js"></script>
 </head>
 <body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+    <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+         width="147" height="25" align="right">
+    </a>
+</div>
 
 <h3>Implicit Client Profile Start Page</h3>
 <p>This example tries OpenAM as an OpenID Connect provider using the
    <a href="http://openid.net/specs/openid-connect-implicit-1_0.html"
    target="_blank">Implicit Client Profile</a>.</p>
+
+<p>OpenID Connect Implicit Client Profile 1.0 is designed for web-based
+   relying parties that use the OAuth 2.0 Implicit grant type. This grant type
+   is designed for clients implemented in a browser. Rather than protect a
+   client secret, the client profile must register a protected redirect URI
+   in advance with the OpenID Provider.</p>
 
 <div id="config"></div>
 
@@ -62,15 +75,13 @@
                     + "<table style='width: 100%; font-family: monospace'>"
                     + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
                     + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
-                    + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
                     + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
                     + "</table>"
 
-                    + "<p>In OpenAM, create the client using the "
-                    + "<code>client_id</code> and <code>client_secret</code>, "
-                    + "then edit the configuration to add the "
-                    + "<code>redirect_uri</code>, and scopes \"openid\" and "
-                    + "\"profile\".</p>"
+                    + "<p>In OpenAM, create an OAuth 2.0 agent using the "
+                    + "<code>client_id</code>, then edit the configuration to "
+                    + "add the <code>redirect_uri</code>, and scopes \"openid\" "
+                    + "and  \"profile\".</p>"
 
                     + "<p>After you have configured everything, log out of "
                     + "OpenAM. Then click the link to start the authorization "
