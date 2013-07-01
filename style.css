@@ -32,6 +32,23 @@ body {
     padding: 0px 0px 0px 0px;
 }
 
+form {
+    display: block;
+    margin: auto;
+    width: 90%;
+    height: auto;
+}
+
+input {
+    display: block;
+    width: 100%;
+}
+
+button {
+    float: right;
+    margin-bottom: 10px;
+}
+
 pre {
     background-color: #eee;
     color: #000;
@@ -44,4 +61,5 @@ hr {
     border: 0;
     border-bottom: 1px dashed #eee;
     background: #ccc;
+    clear: both;
 }

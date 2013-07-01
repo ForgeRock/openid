@@ -43,7 +43,9 @@
 <form id="form" action="#">
     <label>OpenAM URL
     <input id="baseUrl" value="http://openam.example.com:8080/openam"
-           name="base" type="text" size="80" /></label>
+           name="base" type="text" /></label>
+    <label>Access Token (bearer token to POST registration)
+    <input id="bearerToken" name="bearerToken" type="text" /></label>
     <button type="submit">Submit</button>
 </form>
 
@@ -95,6 +97,7 @@
         }
 
         var bearerToken = "invalid"; // TODO: Depends on a client to get a token.
+
         $.ajax({
             url: registrationUrl,
             type: "POST",
