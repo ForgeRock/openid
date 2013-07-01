@@ -40,7 +40,10 @@
 
 <h3>Client Registration Page</h3>
 
-<p>This page serves to register an OpenID Connect 1.0 client with OpenAM.</p>
+<p>This page serves to register this example client with OpenAM dynamically
+   as defined by <a
+   href="http://openid.net/specs/openid-connect-registration-1_0.html"
+   target="_blank">OpenID Connect Dynamic Client Registration 1.0</a>.</p>
 
 <form id="form" action="#">
     <label>OpenAM URL
@@ -62,6 +65,7 @@
         var baseUrl = $("#baseUrl").val();
         var configurationUrl = baseUrl + "/.well-known/openid-configuration";
         var registrationUrl = baseUrl + "/oauth2/connect/register"; // Default
+        var bearerToken = $("#bearerToken").val(); // TODO: Depends on a client to get a token.
 
         $.ajax({
             url: configurationUrl,
@@ -74,7 +78,41 @@
                                     + "</pre>"
                     );
                     registrationUrl = data["registration_endpoint"];
-                    console.log(registrationUrl);
+
+                    $.ajax({
+                        url: registrationUrl,
+                        type: "POST",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(
+                                    "Authorization", "Bearer " + bearerToken);
+                        },
+                        data: {
+                            "redirect_uris": redirect_uris,
+                            "response_types": ["code", "id_token", "token"],
+                            "grant_types": ["authorization_code", "implicit"],
+                            "client_name": "OpenID Connect Example Client",
+                            "client_uri": server + openid
+                        }
+                    }).done(function (data) {
+                                $("#info").html(
+                                        "<h3>Registration Response</h3>"
+                                                + "<pre>"
+                                                + JSON.stringify(
+                                                    data, undefined, 2)
+                                                + "</pre>"
+                                );
+                            }).fail(function (data) {
+                                $("#info").html(
+                                        "<p>Error registering client with "
+                                                + "provider at "
+                                                + registrationUrl + "</p>"
+                                                + "<pre>"
+                                                + JSON.stringify(
+                                                    data, undefined, 2)
+                                                + "</pre>"
+
+                                );
+                            });
                 }).fail(function (data) {
                     $("#config").html(
                             "<p>Error obtaining provider configuration at "
@@ -86,40 +124,7 @@
                     return false;
                 });
 
-        var bearerToken = $("#bearerToken").val(); // TODO: Depends on a client to get a token.
-
-        $.ajax({
-            url: registrationUrl,
-            type: "POST",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Bearer " + bearerToken);
-            },
-            data: {
-                "redirect_uris": redirect_uris,
-                "response_types": ["code", "id_token", "token"],
-                "grant_types": ["authorization_code", "implicit"],
-                "client_name": "OpenID Connect Example Client",
-                "client_uri": server + openid
-            }
-        }).done(function (data) {
-                    $("#info").html(
-                            "<h3>Registration Response</h3>"
-                                    + "<pre>"
-                                    + JSON.stringify(data, undefined, 2)
-                                    + "</pre>"
-                    );
-                }).fail(function (data) {
-                    $("#info").html(
-                            "<p>Error registering client with provider at "
-                                    + registrationUrl + "</p>"
-                                    + "<pre>"
-                                    + JSON.stringify(data, undefined, 2)
-                                    + "</pre>"
-
-                    );
-                });
-
-        return false;
+        return false; // Override normal submit behavior
     });
 </script>
 
