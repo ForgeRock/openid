@@ -27,10 +27,27 @@
 </head>
 <body>
 
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
+
 <h3>Basic Client Profile Start Page</h3>
 <p>Try OpenAM as an OpenID Connect provider using the
    <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
    target="_blank">Basic Client Profile</a>.</p>
+
+<p>OpenID Connect Basic Client Profile 1.0 is designed for web-based
+   relying parties that use the OAuth 2.0 Authorization Code grant type.
+   This grant type makes it possible for the client to get the access code
+   by using the authorization code directly, without passing through the end
+   user's browser. To protect its client secret (password), part of the
+   client must run on the server.</p>
+
+<p>Note: This example is not designed to protect the client secret, but
+   instead to show the results at each step in the process.</p>
 
 <div id="config"></div>
 
@@ -54,13 +71,19 @@
                     + "<p>OpenAM should be running and configured as an "
                     + "OpenID Connect Provider in the same container as this "
                     + "application.</p>"
+
                     + "<p>Current settings in <code>basic.js</code>:</p>"
-                    + "<table style='width: 100%'>"
+                    + "<table style='width: 100%; font-family: monospace'>"
                     + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
                     + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
                     + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
-                    + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
                     + "</table>"
+
+                    + "<p>In OpenAM, create an OAuth 2.0 agent using the "
+                    + "<code>client_id</code> and <code>client_secret</code>, "
+                    + "then edit the configuration to add the scopes "
+                    + "\"openid\" and  \"profile\".</p>"
+
                     + "<p>After you have configured everything, log out of "
                     + "OpenAM. Then click the link to start the authorization "
                     + "process.</p>"

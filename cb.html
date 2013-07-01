@@ -20,7 +20,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>OpenID Connect Basic Client Profile</title>
+    <title>OpenID Connect Basic Client Profile Response Page</title>
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="basic.js"></script>
@@ -30,9 +30,8 @@
             var code = getParameterByName("code");
             var state = getParameterByName("state");
             if (code != "" && state != "") {
-                $("#code").html("<h3>Authorization Code Response</h3>"
-                        + "<p>Code: <code>" + code + "</code></p>"
-                        + "<p>State: <code>" + state + "</code></p>");
+                $("#code").html("<h3>Authorization Code</h3>"
+                        + "<p><code>" + code + "</code></p>");
             } else {
                 var error = parseQueryString();
                 $("#info").html(
@@ -115,14 +114,11 @@
 
                         // Use the access token to get user information.
                         var access_token = data.access_token.toString();
-                        $.getJSON({
+                        $.ajax({
                             url: server + openam + info,
                             beforeSend: function (xhr) {
                                 xhr.setRequestHeader("Authorization",
                                         "Bearer " + access_token);
-                            },
-                            data: {
-                                "scope": "openid profile" // Only in authz request?
                             }
                         }).done(function (data) {
                                     $("#info").html(
@@ -153,6 +149,17 @@
     </script>
 </head>
 <body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="http://forgerock.org/images/ForgeRock-Community-grey-295x50.png"
+             width="147" height="25" align="right">
+    </a>
+</div>
+
+<h3>Basic Client Profile Response Page</h3>
+
+<hr>
 
 <div id="code"><!-- code goes here --></div>
 
