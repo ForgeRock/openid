@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="http://forgerock.org/favicon.ico">
     <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
-            src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+            src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="common.js"></script>
     <script type="text/javascript" src="register.js"></script>
 </head>
@@ -86,13 +86,15 @@
                             xhr.setRequestHeader(
                                     "Authorization", "Bearer " + bearerToken);
                         },
-                        data: {
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify({
                             "redirect_uris": redirect_uris,
                             "response_types": ["code", "id_token", "token"],
                             "grant_types": ["authorization_code", "implicit"],
-                            "client_name": "OpenID Connect Example Client",
+                            "client_name": "My Example Client",
                             "client_uri": server + openid
-                        }
+                        })
                     }).done(function (data) {
                                 $("#info").html(
                                         "<h3>Registration Response</h3>"
