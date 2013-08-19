@@ -43,7 +43,9 @@
 <p>This page serves to register this example client with OpenAM dynamically
    as defined by <a
    href="http://openid.net/specs/openid-connect-registration-1_0.html"
-   target="_blank">OpenID Connect Dynamic Client Registration 1.0</a>.</p>
+   target="_blank">OpenID Connect Dynamic Client Registration 1.0</a>.
+   If you want only to view the provider configuration, you can click
+   Submit without providing an access token.</p>
 
 <form id="form" action="#">
     <label>OpenAM URL
@@ -53,6 +55,26 @@
     <input id="bearerToken" name="bearerToken" type="text" /></label>
     <button type="submit">Submit</button>
 </form>
+
+<p style="clear: both;">For dynamic registration you need an access token to
+    write the configuration to OpenAM by HTTP POST. To obtain the access token,
+    register an initial client statically after creating OpenID Connect
+    provider, and then obtain the access token.</p>
+
+<p>For example, if you register an OAuth 2.0 client in the top-level realm
+    with name <code>masterClient</code> and client secret <code>password</code>,
+    and <code>amadmin</code> has password <code>password</code>, you can obtain
+    the access token as follows.</p>
+
+<pre>$ curl --request POST --user "masterClient:password" --data "grant_type=password&amp;username=amadmin&amp;password=password" http://openam.example.com:8080/openam/oauth2/access_token</pre>
+
+<p>The JSON response should contain an access token that you can use to register
+   your client.</p>
+
+<pre>{"expires_in":59,"token_type":"Bearer","refresh_token":"21fd795b-893b-4a4d-8d09-1d797620a969","access_token":"<b>45f3c1ae-fc01-4bfa-bd86-577c2c21212d</b>"}</pre>
+
+<p>Do not use the example token, but instead get your own access token from
+   OpenAM.</p>
 
 <hr />
 
@@ -65,7 +87,14 @@
         var baseUrl = $("#baseUrl").val();
         var configurationUrl = baseUrl + "/.well-known/openid-configuration";
         var registrationUrl = baseUrl + "/oauth2/connect/register"; // Default
-        var bearerToken = $("#bearerToken").val(); // TODO: Depends on a client to get a token.
+        /*
+         * Dynamic registration requires an access token from the provider
+         * that authorizes registration.
+         *
+         * This access token is requested out-of-band using a separate client
+         * that is already registered.
+         */
+        var bearerToken = $("#bearerToken").val();
 
         $.ajax({
             url: configurationUrl,
@@ -89,11 +118,7 @@
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify({
-                            "redirect_uris": redirect_uris,
-                            "response_types": ["code", "id_token", "token"],
-                            "grant_types": ["authorization_code", "implicit"],
-                            "client_name": "My Example Client",
-                            "client_uri": server + openid
+                            "redirect_uris": redirect_uris
                         })
                     }).done(function (data) {
                                 $("#info").html(
@@ -129,6 +154,9 @@
         return false; // Override normal submit behavior
     });
 </script>
+
+<hr>
+<p align="center"><a href="index.html">Start over</a></p>
 
 </body>
 </html>
