@@ -11,12 +11,9 @@ OpenAM 11.0.0 and later.
 3.   Create the agent profile as described in the examples.
 4.   Try it out.
 
-Neither example is secure. Instead both are completely transparent,
-showing the requests and the steps for the Basic and Implicit Profiles.
-
-TODO
-
-*   Session management
+The examples are not secure. Instead they are completely transparent,
+showing the requests and the steps for the Basic and Implicit Profiles,
+and showing how to register a client dynamically.
 
 * * *
 This Source Code Form is subject to the terms of the Mozilla Public
