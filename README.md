@@ -1,7 +1,7 @@
 # OpenID Connect Examples
 
 These simple examples use the OpenID Connect 1.0 provider support in
-OpenAM 10.2.
+OpenAM 11.0.0 and later.
 
 1.   Clone the project for deployment in your container alongside OpenAM.
      For example, with OpenAM in `/path/to/tomcat/webapps/openam`, clone this
@@ -16,7 +16,6 @@ showing the requests and the steps for the Basic and Implicit Profiles.
 
 TODO
 
-*   Dynamic registration
 *   Session management
 
 * * *
@@ -24,4 +23,4 @@ This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-Copyright 2013 ForgeRock AS
+Copyright 2013-2014 ForgeRock AS
