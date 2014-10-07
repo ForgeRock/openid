@@ -15,7 +15,7 @@
 !
 ! MPL 2.0 HEADER END
 !
-!     Copyright 2013 ForgeRock AS
+!     Copyright 2013-2014 ForgeRock AS
 !
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -47,14 +47,19 @@
    If you want only to view the provider configuration, you can click
    Submit without providing an access token.</p>
 
-<form id="form" action="#">
-    <label>OpenAM URL
-    <input id="baseUrl" value="http://openam.example.com:8080/openam"
-           name="base" type="text" /></label>
-    <label>Access Token (bearer token to POST registration)
-    <input id="bearerToken" name="bearerToken" type="text" /></label>
-    <button type="submit">Submit</button>
-</form>
+<div id="form"></div>
+<script type="text/javascript">
+$("#form").html(
+      "<form id=\"form\" action=\"#\">" +
+      "<label>OpenAM URL" +
+      "<input id=\"baseUrl\" value=\"" + getBaseURL() + "/openam\"" +
+      "       name=\"base\" type=\"text\" /></label>" +
+      "<label>Access Token (bearer token to POST registration)" +
+      "<input id=\"bearerToken\" name=\"bearerToken\" type=\"text\" /></label>" +
+      "<button type=\"submit\">Submit</button>" +
+  "</form>"
+);
+</script>
 
 <p style="clear: both;">For dynamic registration you need an access token to
     write the configuration to OpenAM by HTTP POST. To obtain the access token,
@@ -62,11 +67,18 @@
     provider, and then obtain the access token.</p>
 
 <p>For example, if you register an OAuth 2.0 client in the top-level realm
-    with name <code>masterClient</code> and client secret <code>password</code>,
+    with name <code>myClientID</code> and client secret <code>password</code>,
     and <code>amadmin</code> has password <code>password</code>, you can obtain
     the access token as follows.</p>
 
-<pre>$ curl --request POST --user "masterClient:password" --data "grant_type=password&amp;username=amadmin&amp;password=password" http://openam.example.com:8080/openam/oauth2/access_token</pre>
+<div id="command"></div>
+<script type="text/javascript">
+$("#command").html(
+      "<pre>$ curl --request POST --user \"myClientID:password\" --data \"grant_type=password&amp;username=amadmin&amp;password=password\" " +
+      getBaseURL() + "/openam/oauth2/access_token</pre>"
+);
+</script>
+
 
 <p>The JSON response should contain an access token that you can use to register
    your client.</p>
