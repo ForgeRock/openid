@@ -109,7 +109,10 @@
                             return;
                         }
 
-                        // Ignoring iat (JWT issued at time)
+                        if (now < idToken.iat) {
+                            $("#info").html("The id_token was issued in the future.");
+                            return;
+                        }
 
                         // acr (Authentication Context Class Reference) not requested
 
