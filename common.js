@@ -8,7 +8,7 @@
  * information:
  *     Portions Copyright [yyyy] [name of copyright owner]
  *
- *     Copyright 2013 ForgeRock AS
+ *     Copyright 2013-2014 ForgeRock AS
  *
  */
 // START CONFIGURATION...
@@ -32,6 +32,7 @@ var info = "/oauth2/userinfo";
 // This application's URI, client_id
 var openid = "/openid";
 var client_id = "myClientID";
+var client_secret = "password";
 
 // ...END CONFIGURATION
 
