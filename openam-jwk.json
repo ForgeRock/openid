@@ -1,0 +1,13 @@
+{
+    "keys": [
+        {
+            "kty": "RSA",
+            "kid": "2008-01-15",
+            "use": "sig",
+            "alg": "sig",
+            "n": "AK0kHP1O-RgdgLSoWxkuaYoi5Jic6hLKeuKw8WzCfsQ68ntBDf6tVOTn_kZA7Gjf4oJAL1dXLlxIEy-kZWnxT3FF-0MQ4WQYbGBfaW8LTM4uAOLLvYZ8SIVEXmxhJsSlvaiTWCbNFaOfiII8bhFp4551YB07NfpquUGEwOxOmci_",
+            "e": "AQAB",
+            "factors": []
+        }
+    ]
+}
