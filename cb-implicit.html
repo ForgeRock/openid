@@ -49,27 +49,42 @@
 
             var idToken = params["id_token"];
             idToken = idToken.split(/\./);
-            idToken = JSON.parse(atob(idToken[1]));
-            $("#token").html("<h3>Decoded ID Token Content</h3>"
+
+            var header = JSON.parse(atob(idToken[0]));
+            $("#header").html("<h3>Decoded ID Token Header</h3>"
                     + "<pre>"
-                    + JSON.stringify(idToken, undefined, 2)
+                    + JSON.stringify(header, undefined, 2)
+                    + "</pre>"
+            );
+
+            payload = JSON.parse(atob(idToken[1]));
+            $("#decoded").html("<h3>Decoded ID Token Content</h3>"
+                    + "<pre>"
+                    + JSON.stringify(payload, undefined, 2)
+                    + "</pre>"
+            );
+
+            var signature = idToken[2];
+            $("#signature").html("<h3>ID Token Signature</h3>"
+                    + "<pre>"
+                    + signature
                     + "</pre>"
             );
 
             // Validate id_token
             if (
-                    (idToken.aud instanceof Array
-                    && idToken.aud.indexOf(client_id) == -1)
-                    || (idToken.aud != client_id)
+                    (payload.aud instanceof Array
+                    && payload.aud.indexOf(client_id) == -1)
+                    || (payload.aud != client_id)
                 ) {
-                $("#info").html("Invalid id_token audience: " + idToken.aud);
+                $("#info").html("Invalid id_token audience: " + payload.aud);
                 return;
             }
 
-            if (idToken.aud instanceof Array
-                && idToken.azp != client_id) {
+            if (payload.aud instanceof Array
+                && payload.azp != client_id) {
                 $("#info").html("Invalid id_token authorized party: "
-                        + idToken.azp);
+                        + payload.azp);
                 return;
             }
 
@@ -77,24 +92,24 @@
             $("#disclaimer").html(
                     "Note: No validation done for id_token signatures.<hr>");
 
-            if (idToken.iss != server + openam) {
-                $("#info").html("Invalid id_token issuer: " + idToken.iss);
+            if (payload.iss != server + openam) {
+                $("#info").html("Invalid id_token issuer: " + payload.iss);
                 return;
             }
 
             var now = new Date().getTime() / 1000;
-            if (now >= idToken.exp) {
+            if (now >= payload.exp) {
                 $("#info").html("The id_token has expired.");
                 return;
             }
 
-            if (now < idToken.iat) {
+            if (now < payload.iat) {
                 $("#info").html("The id_token was issued in the future.");
                 return;
             }
 
-            if (idToken.nonce != nonce) {
-                $("#info").html("Invalid id_token nonce: " + idToken.nonce);
+            if (payload.nonce != nonce) {
+                $("#info").html("Invalid id_token nonce: " + payload.nonce);
                 return;
             }
 
@@ -143,7 +158,11 @@
 
 <div id="code"><!-- code goes here --></div>
 
-<div id="token"><!-- token goes here --></div>
+<div id="header"><!-- decoded id_token header goes here --></div>
+
+<div id="decoded"><!-- decoded id_token goes here --></div>
+
+<div id="signature"><!-- decoded id_token signature goes here --></div>
 
 <div id="info"><!-- info goes here --></div>
 
