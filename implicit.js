@@ -8,24 +8,27 @@
  * information:
  *     Portions Copyright [yyyy] [name of copyright owner]
  *
- *     Copyright 2013 ForgeRock AS
+ *     Copyright 2013-2014 ForgeRock AS
  *
  */
 // START CONFIGURATION...
 
 // client_secret is not used in the implicit profile
 var redirect_uri = server + openid + "/cb-implicit.html";
-var state = "af0ifjsldkj";
-var nonce = "n-0S6_WzA2Mj";
+var state        = "af0ifjsldkj";
+var nonce        = "n-0S6_WzA2Mj";
 
 // ...END CONFIGURATION
 
+/* Returns a map of parameters present in the document fragment. */
 function getParamsFromFragment() {
-    var params = {};
+    var params   = {};
     var postBody = location.hash.substring(1);
-    var regex = /([^&=]+)=([^&]*)/g, m;
+    var regex    = /([^&=]+)=([^&]*)/g, m;
+
     while (m = regex.exec(postBody)) {
         params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
+
     return params;
 }

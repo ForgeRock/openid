@@ -8,30 +8,34 @@
  * information:
  *     Portions Copyright [yyyy] [name of copyright owner]
  *
- *     Copyright 2013 ForgeRock AS
+ *     Copyright 2013-2014 ForgeRock AS
  *
  */
 // START CONFIGURATION...
 
 var client_secret = "password";
-var redirect_uri = server + openid + "/cb-basic.html";
-var state = "af0ifjsldkj";
+var redirect_uri  = server + openid + "/cb-basic.html";
+var state         = "af0ifjsldkj";
 
 // ...END CONFIGURATION
 
+/* Returns the value of the named query string parameter. */
 function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regexS = "[\\?&]" + name + "=([^&#]*)";
-    var regex = new RegExp(regexS);
+    name        = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS  = "[\\?&]" + name + "=([^&#]*)";
+    var regex   = new RegExp(regexS);
     var results = regex.exec(window.location.search);
-    if (results == null)
+
+    if (results == null) {
         return "";
-    else
-        return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+/* Returns an HTTP Basic Authentication header string. */
 function authHeader(user, password) {
-    var tok = user + ':' + password;
+    var tok  = user + ':' + password;
     var hash = btoa(tok); // Default: bXlDbGllbnRJRDpwYXNzd29yZA==
     // console.log("hash: " + hash);
     return "Basic " + hash;

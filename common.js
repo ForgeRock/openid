@@ -19,20 +19,20 @@
 function getBaseURL() {
     var protocol = window.location.protocol;
     var hostname = window.location.hostname;
-    var port = window.location.port;
+    var port     = window.location.port;
     return protocol + "//" + hostname + ":" + port;
 }
-var server = getBaseURL();
+var server        = getBaseURL();
 
 // OpenAM is assumed to be deployed under /openam.
-var openam = "/openam";
-var authorize = "/oauth2/authorize";
-var access = "/oauth2/access_token";
-var info = "/oauth2/userinfo";
+var openam        = "/openam";
+var authorize     = "/oauth2/authorize";
+var access        = "/oauth2/access_token";
+var info          = "/oauth2/userinfo";
 
 // This application's URI, client_id, client_secret.
-var openid = "/openid";
-var client_id = "myClientID";
+var openid        = "/openid";
+var client_id     = "myClientID";
 var client_secret = "password";
 
 // ...END CONFIGURATION
@@ -47,11 +47,11 @@ function encodeQueryData(data) {
     return ret.join("&");
 }
 
+/* Returns a map of query string parameters. */
 function parseQueryString() {
     var query = {};
-    var args = document.location.search.substring(1).split('&');
-    for (var arg in args)
-    {
+    var args  = document.location.search.substring(1).split('&');
+    for (var arg in args) {
         var m = args[arg].split('=');
         query[decodeURIComponent(m[0])] = decodeURIComponent(m[1]);
     }

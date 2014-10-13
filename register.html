@@ -72,7 +72,8 @@ $("#form").html(
 <div id="command"></div>
 <script type="text/javascript">
 $("#command").html(
-      "<pre>$ curl --request POST --user \"myClientID:password\" --data \"grant_type=password&amp;username=amadmin&amp;password=password\" " +
+      "<pre>$ curl --request POST --user \"myClientID:password\" " +
+      "--data \"grant_type=password&amp;username=amadmin&amp;password=password\" " +
       getBaseURL() + "/openam/oauth2/access_token</pre>"
 );
 </script>

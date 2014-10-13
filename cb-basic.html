@@ -26,8 +26,11 @@
     <script type="text/javascript"
             src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
-<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+    <!-- Used by validateSignature() -->
+    <script type="text/javascript"
+            src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript"
+            src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
 
     <script type="text/javascript" src="common.js"></script>
     <script type="text/javascript" src="basic.js"></script>
@@ -96,14 +99,14 @@
                                 + "</pre>"
                         );
 
-                        // Validate signature
+                        // Validate signature.
                         var isValid = validateSignature(idToken[0], idToken[1], signature);
                         if (!isValid) {
                             $("#info").html("Invalid id_token signature");
                             return;
                         }
 
-                        // Validate id_token
+                        // Validate id_token.
                         if (payload.iss != server + openam) {
                             $("#info").html("Invalid id_token issuer: "
                                     + payload.iss);
