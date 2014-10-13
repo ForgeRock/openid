@@ -60,18 +60,13 @@ function parseQueryString() {
 }
 
 /* Validates a JWS signature according to
-   https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-33#section-5.2. */
-function validateSignature(header, payload, signature) {
-  var encodedHeader  = tob64u(encode_utf8(JSON.stringify(header)));
-  console.log(encodedHeader);
-  var encodedPayload = tob64u(JSON.stringify(payload));
-  console.log(encodedPayload);
+   https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-33#section-5.2
+   cheating a bit by taking the pre-encoded header and payload.
+ */
+function validateSignature(encodedHeader, encodedPayload, signature) {
   var signingInput   = encodedHeader + "." + encodedPayload;
-  console.log(signingInput);
   var signed         = CryptoJS.HmacSHA256(signingInput, client_secret);
   var encodedSigned  = b64tob64u(signed.toString(CryptoJS.enc.Base64));
-  console.log(encodedSigned);
-  console.log(signature);
   return encodedSigned == signature;
 }
 

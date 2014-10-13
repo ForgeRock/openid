@@ -76,8 +76,11 @@
             );
 
             // Validate signature
-            // TODO: should quit with #info if signature is not valid.
-            console.log(validateSignature(header, payload, signature));
+            var isValid = validateSignature(idToken[0], idToken[1], signature);
+            if (!isValid) {
+                $("#info").html("Invalid id_token signature");
+                return;
+            }
 
             // Validate id_token
             if (
