@@ -70,15 +70,6 @@ function validateSignature(encodedHeader, encodedPayload, signature) {
   return encodedSigned == signature;
 }
 
-/* Returns a base64url-encoded version of the input string. */
-function tob64u(string) {
-    var result = btoa(string);
-    result = result.replace(/\+/g, "-");
-    result = result.replace(/\//g, "_");
-    result = result.replace(/=/g, "");
-    return result;
-}
-
 /* Returns a base64url-encoded version of the base64-encoded input string. */
 function b64tob64u(string) {
     var result = string;
@@ -86,17 +77,4 @@ function b64tob64u(string) {
     result = result.replace(/\//g, "_");
     result = result.replace(/=/g, "");
     return result;
-}
-
-// The following functions are from
-// http://ecmanaut.blogspot.fr/2006/07/encoding-decoding-utf8-in-javascript.html.
-
-/* Encodes a string as UTF-8. */
-function encode_utf8(s) {
-  return unescape(encodeURIComponent(s));
-}
-
-/* Decodes a UTF-8 string. */
-function decode_utf8(s) {
-  return decodeURIComponent(escape(s));
 }
