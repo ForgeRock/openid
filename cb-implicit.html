@@ -96,10 +96,6 @@
                 return;
             }
 
-            // TODO: Validate id_token signature
-            $("#disclaimer").html(
-                    "Note: No validation done for id_token signatures.<hr>");
-
             if (payload.iss != server + openam) {
                 $("#info").html("Invalid id_token issuer: " + payload.iss);
                 return;
@@ -162,15 +158,13 @@
 
 <h3>Implicit Client Profile Response Page</h3>
 
-<div id="disclaimer"></div>
-
 <div id="code"><!-- code goes here --></div>
 
 <div id="header"><!-- decoded id_token header goes here --></div>
 
 <div id="decoded"><!-- decoded id_token goes here --></div>
 
-<div id="signature"><!-- decoded id_token signature goes here --></div>
+<div id="signature"><!-- id_token signature goes here --></div>
 
 <div id="info"><!-- info goes here --></div>
 
