@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2014 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Mobile Connect Example Profile</title>
+    <link rel="shortcut icon" href="http://forgerock.com/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="common.js"></script>
+    <script type="text/javascript" src="basic.js"></script>
+    <script type="text/javascript" src="mobile.js"></script>
+</head>
+<body>
+
+<div>
+    <a href="http://openam.forgerock.org/">
+        <img src="forgerock-logo.svg" width="131" height="83" align="right" alt="ForgeRock Logo">
+    </a>
+</div>
+
+<h3>Mobile Connect Example Profile Start Page</h3>
+
+<p>
+  Try OpenAM as an OpenID Provider and Authenticator for
+  <a href="http://gsmamobileeconomy.com/gsmamc/"
+  target="_blank">GSMA Mobile Connect</a>.
+</p>
+
+<p>
+  Mobile Connect lets users authenticate with mobile phones,
+  independent of the device accessing the service.
+  It is based on OpenID Connect 1.0 and is still under development.
+</p>
+
+<div id="config"></div>
+
+<p><a id="link" href="#">Start authorization</a></p>
+
+<script type="text/javascript">
+    var authRequestParameters = {
+        "response_type": "code",
+        "client_id": client_id,
+        "scope": "openid profile",
+        "redirect_uri": redirect_uri,
+        "state": state,
+        "acr_values": acr_values,
+        "nonce": nonce,
+        "login_hint": login_hint
+    };
+
+    var url = server + openam + authorize + "?"
+            + encodeQueryData(authRequestParameters);
+    $("#link").attr("href", url);
+
+    $("#config").html(
+            "<hr>"
+                    + "<h3>Prerequisite Configuration</h3>"
+
+                    + "<p>OpenAM should be running and configured as an "
+                    + "OpenID Provider (OP) in the top level realm,"
+                    + "and in the same container as this application.</p>"
+
+                    + "<p>In addition, configure the OP as follows:</p>"
+                    + "<ul>"
+                    + "<li>Map acr_value 2 to the ldapService auth chain</li>"
+                    + "<li>Set the default acr claim to MEDIUM</li>"
+                    + "<li>Map the amr value UID_PWD to DataStore</li>"
+                    + "</ul>"
+
+                    + "<p>Furthermore, add the following"
+                    + "to LDAP User Attributes for the data store:</p>"
+                    + "<ul>"
+                    + "<li>createTimestamp</li>"
+                    + "<li>modifyTimestamp</li>"
+                    + "</ul>"
+
+                    + "<p>Current settings in <code>basic.js</code>:</p>"
+                    + "<table style='width: 100%; font-family: monospace'>"
+                    + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
+                    + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
+                    + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
+                    + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
+                    + "</table>"
+
+                    + "<p>Current settings in <code>mobile.js</code>:</p>"
+                    + "<table style='width: 100%; font-family: monospace'>"
+                    + "<tr><td>acr_values</td><td>" + acr_values + "</td></tr>"
+                    + "<tr><td>nonce</td><td>" + nonce + "</td></tr>"
+                    + "<tr><td>login_hint</td><td>" + login_hint + "</td></tr>"
+                    + "</table>"
+
+                    + "<p>In OpenAM, create an OAuth 2.0 agent using the "
+                    + "<code>client_id</code>, <code>client_secret</code>, "
+                    + "and <code>redirect_uri</code>, and then edit the "
+                    + "configuration to add the scopes \"openid\" and "
+                    + "\"profile\".</p>"
+
+                    + "<p>After you have configured everything, log out of "
+                    + "OpenAM. Then click the link to start the authorization "
+                    + "process.</p>"
+    );
+</script>
+
+</body>
+</html>
