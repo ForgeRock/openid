@@ -13,7 +13,7 @@
  */
 // START CONFIGURATION...
 
-var acr_values = "2";
+var acr_values = "loa-2";
 var nonce      = "n-0S6_WzA2Mj";
 var login_hint = "msisdn=15554567890";
 
