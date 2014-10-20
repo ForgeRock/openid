@@ -75,22 +75,26 @@
             "<hr>"
                     + "<h3>Prerequisite Configuration</h3>"
 
+                    + "<p>Prepare as for the Basic profile.</p>"
+
                     + "<p>OpenAM should be running and configured as an "
                     + "OpenID Provider (OP) in the top level realm,"
                     + "and in the same container as this application.</p>"
 
                     + "<p>In addition, configure the OP as follows:</p>"
                     + "<ul>"
-                    + "<li>Map acr_value 2 to the ldapService auth chain</li>"
-                    + "<li>Set the default acr claim to http://openam.example.com/assurance/loa-2</li>"
-                    + "<li>Map the amr value UID_PWD to DataStore</li>"
+                    + "<li>Map \"acr_value\" <code>" + acr_values + "</code> "
+                    + "to the <code>ldapService</code> auth chain</li>"
+                    + "<li>Set the default acr claim to "
+                    + "<code>http://openam.example.com/assurance/loa-2</code></li>"
+                    + "<li>Map the \"amr\" value <code>UID_PWD</code> to DataStore</li>"
                     + "</ul>"
 
-                    + "<p>Furthermore, add the following"
+                    + "<p>Furthermore, add the following "
                     + "to LDAP User Attributes for the data store:</p>"
                     + "<ul>"
-                    + "<li>createTimestamp</li>"
-                    + "<li>modifyTimestamp</li>"
+                    + "<li><code>createTimestamp</code></li>"
+                    + "<li><code>modifyTimestamp</code></li>"
                     + "</ul>"
 
                     + "<p>Current settings in <code>basic.js</code>:</p>"
