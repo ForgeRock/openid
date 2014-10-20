@@ -20,7 +20,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Mobile Connect Example Profile</title>
+    <title>Mobile Connect Profile</title>
     <link rel="shortcut icon" href="http://forgerock.com/favicon.ico">
     <link type="text/css" rel="stylesheet" href="style.css">
     <script type="text/javascript"
@@ -37,7 +37,7 @@
     </a>
 </div>
 
-<h3>Mobile Connect Example Profile Start Page</h3>
+<h3>Mobile Connect Profile Start Page</h3>
 
 <p>
   Try OpenAM as an OpenID Provider and Authenticator for
@@ -94,7 +94,14 @@
                     + "<li><code>modifyTimestamp</code></li>"
                     + "</ul>"
 
-                    + "<p>Current settings in <code>basic.js</code>:</p>"
+                    + "<p>This sample GSMA Mobile Connect relying party "
+                    + "reuses the settings for the Basic Client sample, "
+                    + "and reuses the Basic Client redirect URI. "
+                    + "This sample adds additional settings for Mobile Connect.</p>"
+
+                    + "<p>Adjust the settings as necessary for your configuration.</p>"
+
+                    + "<p>Current settings from <code>basic.js</code>:</p>"
                     + "<table style='width: 100%; font-family: monospace'>"
                     + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
                     + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
@@ -102,7 +109,7 @@
                     + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
                     + "</table>"
 
-                    + "<p>Current settings in <code>mobile.js</code>:</p>"
+                    + "<p>Current settings from <code>mobile.js</code>:</p>"
                     + "<table style='width: 100%; font-family: monospace'>"
                     + "<tr><td>acr_values</td><td>" + acr_values + "</td></tr>"
                     + "<tr><td>nonce</td><td>" + nonce + "</td></tr>"
