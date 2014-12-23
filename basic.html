@@ -60,6 +60,7 @@
     var authRequestParameters = {
         "response_type": "code",
         "client_id": client_id,
+        "realm": client_realm,
         "scope": "openid profile",
         "redirect_uri": redirect_uri,
         "state": state
@@ -82,6 +83,7 @@
                     + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
                     + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
                     + "<tr><td>client_secret</td><td>" + client_secret + "</td></tr>"
+                    + "<tr><td>realm</td><td>" + client_realm + "</td></tr>"
                     + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
                     + "</table>"
 

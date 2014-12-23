@@ -34,6 +34,7 @@ var info          = "/oauth2/userinfo";
 var openid        = "/openid";
 var client_id     = "myClientID";
 var client_secret = "password";
+var client_realm  = "/";
 
 // ...END CONFIGURATION
 

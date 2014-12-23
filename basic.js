@@ -13,7 +13,6 @@
  */
 // START CONFIGURATION...
 
-var client_secret = "password";
 var redirect_uri  = server + openid + "/cb-basic.html";
 var state         = "af0ifjsldkj";
 
