@@ -134,7 +134,8 @@
                             "Bearer " + params["access_token"]);
                 },
                 data: {
-                    "scope": "openid profile"
+                    "scope": "openid profile",
+                    "realm": client_realm
                 }
             }).done(function (data) {
                     $("#info").html(

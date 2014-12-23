@@ -56,6 +56,7 @@
     var authRequestParameters = {
         "response_type": "id_token token",
         "client_id": client_id,
+        "realm": client_realm,
         "scope": "openid profile",
         "redirect_uri": redirect_uri,
         "state": state,
@@ -78,6 +79,7 @@
                     + "<table style='width: 100%; font-family: monospace'>"
                     + "<tr><td>OpenAM URI</td><td>" + openam + "</td></tr>"
                     + "<tr><td>client_id</td><td>" + client_id + "</td></tr>"
+                    + "<tr><td>realm</td><td>" + client_realm + "</td></tr>"
                     + "<tr><td>redirect_uri</td><td>" + redirect_uri + "</td></tr>"
                     + "</table>"
 
