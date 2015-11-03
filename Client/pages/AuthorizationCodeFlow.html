@@ -1,0 +1,110 @@
+<div class="content body">
+
+    <h1 >Authorization Code Flow</h1>
+
+    <section id="introduction">
+        <h2 class="page-header"><a>Oauth2 flow reminder, OpenAM oriented</a></h2>
+        <p>
+            The purpose of this section is to remind the main key points of the OAuth2 and describe its application to an OpenAM environment.
+            We won't go through the OAuth2 flow in details. If it is your first time with OAuth2, we recommend that you check some OAuth2 documentation online first.
+        </p>
+        <section id="actors">
+            <h3 class="page-header"><a>Who is who?</a></h3>
+            <p class="lead">
+                There is four actors in the OAuth2 flow. We will tell you who is who in this example:
+                <ul>
+                    <li>
+                        <b>The resource Owner</b>
+                        <p>
+                            It's you! As a user behind your screen, you will play the role of the resource Owner. What you will
+                            have to do in this flow is to identify to the authoritative server OpenAM, and accept sharing some information with the client.
+                         </p>
+                    </li>
+                    <li>
+                        <b>The client</b>
+                        <p>
+                            It's me, the web-application. My role is to get an access token for accessing the final resource,
+                            like your email or the list of your friend on facebook.
+                        </p>
+                    </li>
+                    <li>
+                        <b>The authoritative sever</b>
+                        <p>
+                            It's OpenAM. Its role is to identify you and make sure that you want to share the information ask by me, the client.
+                            It will then implement the OAuth2 flow and manage the access token. It will interact with you first and then will interact with me.
+                            Later, the resource provider will also interact with OpenAM, for checking that the access token send to it is valid.
+                        </p>
+                    </li>
+                    <li>
+                        <b>The resource provider.</b>
+                        <p>
+                            The resource provider is the one that own the resource. It will only give it to me if I get a valid access token.
+                            For this example, we hosted the resource provider in the same web application but at a different address: <a target="_blank" href="{{resourceProviderURL}}">{{resourceProviderURL}}</a>
+                        </p>
+                    </li>
+                </ul>
+            </p>
+        </section>
+        <section id="Authorization">
+            <h2 class="page-header"><a>Important facts you need to have in mind</a></h2>
+            <ul>
+                <li>
+                    <p>I (as the client) won't have access to your credential. <b>The communication between you and OpenAM won't go through this page</b>, you will be redirected to OpenAM directly.
+                Therefore, this communication will stay confidential.</p>
+                </li>
+                <li>
+                    <p>
+                    When you will be identified and you will consent to share some information with me, <b>OpenAM will have to keep the client (me) aware of what happened during the authentication and authorization</b>. Different use-cases:</p>
+                        <ul>
+                            <li>
+                                <p>You were authenticated with success and you accepted to share the information with me. OpenAM will give an authorization code.</p>
+                            </li>
+                            <li>
+                                <p>Something bad happened between you and OpenAM (authentication failed, you cancel the consent form, etc). OpenAM will return me the corresponding error but
+                                for security reason, I may not have access to the specific root cause. I may only receive a general error message.</p>
+                            </li>
+                        </ul>
+
+                </li>
+                <li>
+                    How OpenAM contact me after after the authentication and authorization process? <b>OpenAM will use an http redirection</b> to contact the client, in order to redirect you to this web-application.
+                    When we will start the flow, we will specify the redirect URL to OpenAM, which check that URL is register in its configuration. OpenAM will use this URL to redirect you and will also
+                    <b>add some parameters in the URL to share information with the client (me)</b>.
+                </li>
+                <li>
+                    When OpenAM will redirect you to this web-application, <b>it will return an authorization code and not the access token directly</b>. Why?
+                    OpenAM could technically return the access token, the problem is, with the redirection, <b>OpenAM can't check the identity of the web-application yet</b>. The only way to be sure that OpenAM gives
+                    the access token to me and not another application, is to use the authorization code:
+                    <ul>
+                        <li>OpenAM gives back a code to me. This code could be catch by another applications via for example the log history of a proxy.</li>
+                        <li>I use this code to ask for the access token and at the same time, identify myself. Only the client can identify to OpenAM, without the client credential, a pirate can't
+                        retrieve information from this code.</li>
+                        <li><b>If my credential are correct and the authorization code valid, OpenAM returns to me an access token.</b></li>
+                    </ul>
+                </li>
+                <li>
+                    <b>The authorization flow is the most secured flow.</b> Every actors are identify and only the minimal of information is shared between actors. The other OAuth2 flows are simplification of this one,
+                    will be more permissive (see each flow for more details).
+                </li>
+            </ul>
+
+        </section>
+
+    </section>
+
+
+    <p>Note: This example is not designed to protect the client secret, but
+        instead to show the results at each step in the process.</p>
+
+
+    <p>Select the configuration that you want to use for this flow:</p>
+
+    <div id="configurations"  ng-init="flowName = 'Authorization Code Flow'">
+        <div ng-repeat="(key, config) in configurations.configurations" class="configuration">
+
+            <ng-include src="'templates/configuration.html'"></ng-include>
+
+        </div>
+    </div>
+
+</div>

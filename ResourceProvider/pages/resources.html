@@ -1,0 +1,21 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            List of the resources
+            <small>This application is the resource provider</small>
+        </h1>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <p>
+            For the purpose of this example, those resources are not private. However, the client application will access them via OAuth2.
+        </p>
+        <div id="resources">
+            <div ng-repeat="(key, resource) in resources.resources" class="resource">
+                <ng-include src="'templates/resource.html'"></ng-include>
+            </div>
+        </div>
+
+    </section><!-- /.content -->

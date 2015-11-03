@@ -1,0 +1,100 @@
+<div class="content body">
+
+    <section id="introduction">
+        <h2><a href="#introduction">Introduction</a></h2>
+        <p class="lead">
+            The examples provided here are both written in JavaScript. Neither aims to protect anything, but instead to show you the steps that each kind of client follows, and the responses from OpenAM as OAuth2 and/or OpenID Connect Provider.
+        </p>
+    </section><!-- /#introduction -->
+
+    <section id="OAuth2">
+        <h2><a href="#introduction">OAuth2</a></h2>
+
+        <p><a href="http://tools.ietf.org/html/rfc6749" target="_blank">The OAuth 2.0 standard</a>
+            defines four oauth flows: </p>
+
+        <ul>
+            <li>
+                <h4>The Authorization Code Flow</h4>
+                <p>The Authorization Code Flow is the default flow and most secure Oauth flow.
+                    For using this flow, the client should be able for secure storage of the ClientID and ClientSecret.
+                    Client applications with the code running in the server side can use this flow.</p>
+
+
+                <a class="btn btn-block btn-success" href="#AuthorizationCodeFlow">Try the Authorization Code Flow</a>
+            </li>
+            <li>
+                <h4>The Implicit Flow</h4>
+                <p>The Implicit flow is designed for application that can't store the client secret. It is specially the
+                    case for applications with the code running in the client side, like javascript.
+                    This flow is less secured as the client identity won't be check. Therefore, the access token generated
+                    with this flow will have a short expiration time.
+                </p>
+
+                <a class="btn btn-block btn-success" href="authorizationCode/index.html">Try the Implicit flow</a>
+            </li>
+
+            <li>
+                <h4>The Resource Owner Password Credentials Flow</h4>
+                <p>This flow is used when the resource owner can entrust the password to the client. You can only use this flow
+                    with OpenAM if the authentication chain you want to use accept credential in the format username, password.
+                    If you're using a chain with HOTP, this flow won't fit.</p>
+
+                <a class="btn btn-block btn-success" href="authorizationCode/index.html">Try the  Resource Owner Password Credentials Flow</a>.</p>
+            </li>
+            <li>
+                <h4>The Client Credentials Flow</h4>
+                <p>The client flow is used when the client is also the resource owner. It is usually the case if for example,
+                    you have your mobile application and your web application and you want to configure oauth2 between the two.
+                </p>
+
+                <a class="btn btn-block btn-success" href="authorizationCode/index.html">Try the Client Credentials Flow</a>.</p>
+            </li>
+        </ul>
+    </section><!-- /#introduction -->
+
+    <section id="OpenID">
+        <h2><a href="#introduction">OpenID Connect</a></h2>
+        <p><a href="http://openid.net/connect/" target="_blank">OpenID Connect 1.0</a>
+            defines two client profiles.</p>
+        <ul>
+        <li>
+            <h4>Basic Client Profile</h4>
+            <p>The Basic Client Profile is designed for web-based relying
+                parties that use the OAuth 2.0 Authorization Code grant type,
+                such as server-side clients that can protect their client
+                credentials.</p>
+
+            <a class="btn btn-block btn-success" href="authorizationCode/index.html">Try the Basic Client Profile</a>
+        </li>
+
+        <li>
+            <h4>Implicit Client Profile</h4>
+            <p>The Implicit Client Profile is designed for relying parties
+                that use the OAuth 2.0 Implicit grant type, such as browser-based
+                clients written in JavaScript.</p>
+
+            <a class="btn btn-block btn-success" href="authorizationCode/index.html">Try the Implicit Client Profile</a>
+        </li>
+        </ul>
+
+        <h3>OpenID Connect Dynamic Registration</h3>
+
+        <p>OpenID Connect 1.0 defines mechanisms both to discover the provider
+            configuration, and also to register client applications dynamically.</p>
+
+        <p>See the <a href="register.html">example registration page</a> for details.</p>
+
+        <h3>GSMA Mobile Connect</h3>
+
+        <p>
+            Try OpenAM 12 and later as an OpenID Provider and Authenticator for
+            <a href="http://gsmamobileeconomy.com/gsmamc/"
+               target="_blank">GSMA Mobile Connect</a>.
+        </p>
+
+        <p>
+            See the <a href="mobile.html">Mobile Connect page</a> for details.
+    </section><!-- /#introduction -->
+
+</div>

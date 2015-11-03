@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<!-- define angular app -->
+<html ng-app="scotchApp">
+
+<head>
+  <!-- SCROLLS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../dist/css/forgerock/documentation.css">
+    <link rel="stylesheet" href="../dist/css/forgerock/forgerock.css">
+  <!-- SPELLS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="route/resourceProviderRoute.js"></script>
+</head>
+
+<!-- define angular controller -->
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="mainController">
+
+<div class="wrapper">
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">FR Resources Provider</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">ForgeRock Resources Provider</span>
+        </a>
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <!-- Navbar Right Menu -->
+
+
+        </nav>
+    </header>
+    <!-- =============================================== -->
+
+    <!-- Left side column. contains the sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li><a href="#"><i class="fa fa-circle-o"></i>Main</a></li>
+
+                <li><a href="#resources"><i class="fa fa-circle-o"></i>Resources</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i>Resources Access</a></li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- =============================================== -->
+
+
+    <!-- angular templating -->
+		<!-- this is where content will be injected -->
+    <div class="content-wrapper" ng-view> </div>
+
+
+
+
+
+  <!-- jQuery 2.1.4 -->
+  <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+  <!-- Bootstrap 3.3.5 -->
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="../plugins/fastclick/fastclick.min.js"></script>
+  <!-- AdminLTE App -->
+    <script src="../dist/js/app.min.js"></script>
+
+    <script src="../dist/js/forgerock/common.js"></script>
+
+</div>
+</body>
+
+</html>

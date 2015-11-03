@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "myGlobalConfig",
+      "scope": "openid profile",
+      "client_id": "myClientID",
+      "client_secret": "password",
+      "openam_uri": "http://openam.example.com:28080/openam",
+      "realm": "/",
+      "state": "af0ifjsldkj",
+      "redirect_uri": "result.html",
+      "certificate": ""
+    },
+    {
+      "name": "configRealmA",
+      "scope": "openid profile",
+      "client_id": "myClientID",
+      "client_secret": "password",
+      "openam_uri": "http://openam.example.com:28080/openam",
+      "state": "wer2okfwej",
+      "realm": "realmA",
+      "redirect_uri": "result.html"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Request '{{request.name}}'</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
+    <div class="box-body">
+
+        <ul>
+            <li>{{request.type}} {{request.endpoint}}</li>
+            <li>Host: {{request.baseURL}}</li>
+            <li ng-show="request.config.headers">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Headers:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key, value) in request.config.headers" class="resource">
+                            <td>{{key}}</td>
+                            <td>{{value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+            <li ng-if="request.parameters.length > 0">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Parameters:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="(key, value) in request.parameters" class="resource">
+                            <td>{{key}}</td>
+                            <td>{{value}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            </li>
+            <li ng-show="request.data">
+                Data: {{request.data}}
+            </li>
+        </ul>
+    </div><!-- /.box-body -->
+</div>

@@ -1,0 +1,36 @@
+<div class="content body">
+
+    <h2>Basic Client Profile Start Page</h2>
+
+    <p>Try OpenAM as an OpenID Connect provider using the
+        <a href="http://openid.net/specs/openid-connect-basic-1_0.html"
+           target="_blank">Basic Client Profile</a>.</p>
+
+    <p>OpenID Connect Basic Client Profile 1.0 is designed for web-based
+        relying parties that use the OAuth 2.0 Authorization Code grant type.
+        This grant type makes it possible for the client to get the access code
+        by using the authorization code directly, without passing through the end
+        user's browser. To protect its client secret (password), part of the
+        client must run on the server.</p>
+
+    <p>Note: This example is not designed to protect the client secret, but
+        instead to show the results at each step in the process.</p>
+
+    <p>In the OAuth2, this application is playing the role of the client. On this particular flow, the concept is to not share your credential with this application.
+    When you will start the flow, you will be redirected to OpenAM. Notice that you're going to OpenAM directly, this client application is not aware of the actions you have done. When you will have enter your credential and
+        accept the access requests, OpenAM will redirect you to this client application on a specific page defined in the configuration.
+        It will add some parameters with the redirection: an error if something went wrong or the authorization code.
+    </p>
+
+
+    <p>Select the configuration that you want to use for this flow:</p>
+
+    <div id="configurations">
+        <div ng-repeat="(key, config) in configurations.configurations" class="box configuration">
+            <ng-include src="'templates/configuration.html'"></ng-include>
+            <a class="btn btn-block btn-success" href="{{config.authorizationFlowURL}}">Start the basic client profile flow</a>
+
+        </div>
+    </div>
+
+</div>

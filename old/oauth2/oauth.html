@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013-2014 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OAuth2 Examples</title>
+    <link rel="shortcut icon" href="http://forgerock.com/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<a id="logo" href="http://forgerock.org/"><a/>
+
+
+<h3>OAuth2</h3>
+
+<p><a href="http://tools.ietf.org/html/rfc6749" target="_blank">The OAuth 2.0 standard</a>
+   defines four oauth flows</p>
+
+   <dl>
+       <dt><em>The Authorization Code Flow</em></dt>
+       <dd>
+           <p>The Authorization Code Flow is the default flow and most secure Oauth flow.
+           For using this flow, the client should be able for secure storage of the ClientID and ClientSecret.
+           Client applications with the code running in the server side can use this flow.</p>
+
+           <p>Try the <a href="authorizationCode/index.html">The Authorization Code Flow</a>.</p>
+       </dd>
+
+       <dt><em>The Implicit Flow</em></dt>
+       <dd>
+           <p>The Implicit flow is designed for application that can't store the client secret. It is specially the
+           case for applications with the code running in the client side, like javascript.
+               This flow is less secured as the client identity won't be check. Therefore, the access token generated
+               with this flow will have a short expiration time.
+           </p>
+
+           <p>Try the <a href="implicit/index.html">Implicit flow</a>.</p>
+       </dd>
+
+       <dt><em>The Resource Owner Password Credentials Flow</em></dt>
+       <dd>
+           <p>This flow is used when the resource owner can entrust the password to the client. You can only use this flow
+           with OpenAM if the authentication chain you want to use accept credential in the format username, password.
+           If you're using a chain with HOTP, this flow won't fit.</p>
+
+           <p>Try the <a href="password/index.html">Resource Owner Password Credentials Flow</a>.</p>
+       </dd>
+
+       <dt><em>The Client Credentials Flow</em></dt>
+       <dd>
+           <p>The client flow is used when the client is also the resource owner. It is usually the case if for example,
+               you have your mobile application and your web application and you want to configure oauth2 between the two.
+           </p>
+
+           <p>Try the <a href="clientCredential/index.html">Client Credentials Flow</a>.</p>
+       </dd>
+   </dl>
+
+<p>The examples provided here are both written in JavaScript. Neither aims to
+   protect anything, but instead to show you the steps that each kind of client
+   follows, and the responses from OpenAM as OpenID Connect Provider.</p>
+
+</body>
+</html>

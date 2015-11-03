@@ -1,0 +1,58 @@
+<div class="box box-default collapsed-box">
+    <div class="box-header with-border">
+        <h3 class="box-title">OpenAM configuration '{{config.name}}'</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+        </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
+    <div class="box-body">
+    <div class="table-responsive">
+        <table class="table no-margin">
+            <thead>
+            <tr>
+                <th>Property</th>
+                <th>value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>scope</td>
+                <td>{{config.scope}}</td>
+            </tr>
+            <tr>
+                <td>client_id</td>
+                <td>{{config.client_id}}</td>
+
+            </tr>
+            <tr>
+                <td>client_secret</td>
+                <td>{{config.client_secret}}</td>
+
+            </tr>
+            <tr>
+                <td>openam_uri</td>
+                <td>{{config.openam_uri}}</td>
+
+            </tr>
+            <tr>
+                <td>realm</td>
+                <td>{{config.realm}}</td>
+            </tr>
+            <tr>
+                <td>redirect_uri</td>
+                <td>{{config.redirect_uri}}</td>
+            </tr>
+            <tr>
+                <td>state</td>
+                <td>{{config.state}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div><!-- /.table-responsive -->
+</div><!-- /.box-body -->
+    <div ng-if="flowName !== undefined " class="startLink clearfix" style="display: block;">
+
+    <a class="btn btn-block btn-success" href="{{config.authorizationFlowURL}}">Start the {{flowName}}</a>
+
+</div><!-- /.box-footer -->
+</div>

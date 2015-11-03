@@ -1,0 +1,59 @@
+{
+  "resources": [
+    {
+      "id": "bob",
+      "attributes": {
+        "mail": "bob@forgerock.com",
+        "musics": [
+          {
+            "artiste": "Linkin Park",
+            "album": "Hybrid Theory"
+          },
+          {
+            "artiste": "Jimi Hendrix",
+            "album": "Winterland"
+          }
+        ],
+        "picture": "resources/avatars/whale.jpg"
+      }
+    },
+    {
+      "id": "demo",
+      "attributes": {
+        "mail": "demo@forgerock.com",
+        "musics": [
+          {
+            "artiste": "Foster The People",
+            "album": "Torches"
+          },
+          {
+            "artiste": "Artic Monkeys",
+            "album": "AM"
+          },
+          {
+            "artiste": "Jimi Hendrix",
+            "album": "Winterland"
+          }
+        ],
+        "picture": "resources/avatars/jimi_hendrix.png"
+      }
+    },
+    {
+      "id": "alice",
+      "attributes": {
+        "mail": "alice@forgerock.com",
+        "musics": [
+          {
+            "artiste": "Kings of Leon",
+            "album": "Mechanical Bull"
+          },
+          {
+            "artiste": "Muse",
+            "album": "Black Holes And Revelations"
+          }
+        ],
+        "picture": "resources/avatars/catch_me_if_you_can.jpg"
+      }
+    }
+  ]
+}

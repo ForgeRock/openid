@@ -1,0 +1,1 @@
+http://cedric-dumont.com/2015/03/31/openid-id_token-validation-in-javascript-an-angular-service/

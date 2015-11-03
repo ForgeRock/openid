@@ -1,0 +1,120 @@
+<div class="content body">
+
+    <h1>user Info</h1>
+
+    <section id="introduction">
+        <h2 class="page-header"><a>Precondition</a></h2>
+        <p>
+            Before using this endpoint, you need to have an access token. For the purpose of this sample, the access token is stored in the cookie.
+            Use the OAuth2 flow of your choice before trying this endpoint.
+        </p>
+    </section>
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Parameters stored in cookies</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                    <tr>
+                        <th>key</th>
+                        <th>value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Access Token</td>
+                        <td>{{accessToken}}</td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>{{state}}</td>
+                    </tr>
+                    <tr>
+                        <td>Refresh Token</td>
+                        <td>{{refreshToken}}</td>
+                    </tr>
+                    <tr>
+                        <td>Configuration used</td>
+                        <td>{{config}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+    </div>
+
+    <div ng-switch="isError">
+        <div ng-switch-when="true">
+            <ng-include src="'templates/error.html'"></ng-include>
+        </div>
+        <div ng-switch-when="false">
+            <div ng-switch="userInfoRequest.status.isSent" >
+                <div ng-switch-when="false">
+                    <a class="btn btn-block btn-success" ng-click="askUserInfo()">Ask for the user info using the access token</a>
+                </div>
+                <div ng-switch-when="true">
+
+                    <div ng-switch="userInfonRequest.status.responseReceive">
+                        <div ng-switch-when="false">
+                            <a class="btn btn-block btn-success"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</a>
+                        </div>
+                        <ng-include ng-init="request = userInfoRequest" src="'templates/ajaxRequest.html'"></ng-include>
+
+                        <div ng-if="isUserInfoError">
+                            <ng-include src="'templates/error.html'"></ng-include>
+                        </div>
+
+
+
+                        <div ng-if="responseFromUserInfo">
+                            <section id="userInfoReceivedReceived">
+                                <h2><a href="#codeReceived">User Info received with success!</a></h2>
+                                <p class="lead">
+                                    You can now access the user data.
+                                </p>
+                            </section><!-- /#introduction -->
+
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">user Info result</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    </div><!-- /.box-tools -->
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <table class="table no-margin">
+                                            <thead>
+                                            <tr>
+                                                <th>key</th>
+                                                <th>value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Response from OpenAM</td>
+                                                <td><pre>{{responseFromUserInfo | json}}</pre></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div><!-- /.table-responsive -->
+                                </div><!-- /.box-body -->
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

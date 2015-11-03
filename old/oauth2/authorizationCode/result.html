@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013-2014 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>The Authorization Code Flow Response page</title>
+    <link rel="shortcut icon" href="http://forgerock.com/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="../../css/style.css">
+    <script type="text/javascript"
+            src="///code.jquery.com/jquery-latest.min.js"></script>
+
+    <!-- Used by validateSignature() -->
+    <script type="text/javascript"
+            src="///crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript"
+            src="///crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+
+    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            var code = getParameterByName("code");
+            var state = getParameterByName("state");
+            if (code != "" && state != "") {
+                $("#code").html("<h3>Authorization Code</h3>"
+                        + "<p><code>" + code + "</code></p>");
+            } else {
+                var error = parseQueryString();
+                $("#info").html(
+                        "<h3>Authorization Code Response</h3>"
+                                + "<pre>"
+                                + JSON.stringify(error, undefined, 2)
+                                + "</pre>"
+                );
+                return;
+            }
+
+            var configuration = getConfiguration("../configurations.json", state);
+
+            $("#configuration").append(createConfigDiv(configuration));
+
+            // Use authorization code to retrieve access token & id_token.
+            $.ajax({
+                url: configuration.openam_uri + access,
+                type: "POST",
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization",
+                            authHeader(configuration.client_id, configuration.client_secret));
+                },
+                data: {
+                    "grant_type": "authorization_code",
+                    "code": code,
+                    "realm": configuration.realm,
+                    "redirect_uri": configuration.redirect_uri
+                },
+                accepts: "json"
+            }).done(function (data) {
+
+                        console.log(data);
+                        $("#token").html(
+                                "<h3>Token Response</h3>"
+                                        + "<pre>"
+                                        + JSON.stringify(data, undefined, 2)
+                                        + "</pre>"
+                        );
+
+                        var idToken = data.id_token;
+                        idToken = idToken.split(/\./);
+
+                        var header = JSON.parse(atob(idToken[0]));
+                        $("#header").html("<h3>Decoded ID Token Header</h3>"
+                                + "<pre>"
+                                + JSON.stringify(header, undefined, 2)
+                                + "</pre>"
+                        );
+
+                        var payload = JSON.parse(atob(idToken[1]));
+                        $("#decoded").html("<h3>Decoded ID Token Content</h3>"
+                                + "<pre>"
+                                + JSON.stringify(payload, undefined, 2)
+                                + "</pre>"
+                        );
+
+                        var signature = idToken[2];
+                        $("#signature").html("<h3>ID Token Signature</h3>"
+                                + "<pre>"
+                                + signature
+                                + "</pre>"
+                        );
+
+                        // Validate signature.
+                        var isValid = validateSignature(idToken[0], idToken[1], signature);
+                        if (!isValid) {
+                            $("#info").html("Invalid id_token signature");
+                            return;
+                        }
+
+                        // Validate id_token.
+                        if (payload.iss != configuration.openam_uri) {
+                            $("#info").html("Invalid id_token issuer: "
+                                    + payload.iss);
+                            return;
+                        }
+
+                        if (
+                                (
+                                    payload.aud instanceof Array
+                                        && payload.aud.indexOf(client_id) == -1
+                                )
+                                    || (payload.aud != client_id)) {
+                            $("#info").html("Invalid id_token audience: "
+                                    + payload.aud);
+                            return;
+                        }
+
+                        if (payload.aud instanceof Array
+                                && payload.azp != client_id) {
+                            $("#info").html(
+                                    "Invalid id_token authorized party: "
+                                    + payload.azp);
+                            return;
+                        }
+
+                        var now = new Date().getTime() / 1000;
+                        if (now >= payload.exp) {
+                            $("#info").html("The id_token has expired.");
+                            return;
+                        }
+
+                        if (now < payload.iat) {
+                            $("#info").html("The id_token was issued in the future.");
+                            return;
+                        }
+
+                        // acr (Authentication Context Class Reference) not requested
+
+                        // max_age not requested
+
+                        // Use the access token to get user information.
+                        var access_token = data.access_token.toString();
+                        $.ajax({
+                            url: configuration.openam_uri + info,
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("Authorization",
+                                        "Bearer " + access_token);
+                            }
+                        }).done(function (data) {
+                                    $("#info").html(
+                                            "<h3>End User Info</h3>"
+                                                    + "<pre>"
+                                                    + JSON.stringify(
+                                                        data, undefined, 2)
+                                                    + "</pre>"
+                                    );
+                                }).fail(function (data) {
+                                    $("#info").html(
+                                            "<p>Error obtaining user info:</p>"
+                                                    + "<pre>"
+                                                    + JSON.stringify(
+                                                        data, undefined, 2)
+                                                    + "</pre>"
+                                    );
+                                });
+                    }).fail(function (data) {
+                        $("#info").html(
+                                "<p>Error obtaining access token:</p>"
+                                        + "<pre>"
+                                        + JSON.stringify(data, undefined, 2)
+                                        + "</pre>"
+                        );
+                    });
+        });
+    </script>
+</head>
+<body>
+
+<a id="logo" href="http://forgerock.org/"><a/>
+
+
+    <title>The Authorization Code Flow Response page</title>
+
+<p>
+  Concerning signature validation, see <a href="common.js">common.js</a>.
+</p>
+
+<hr>
+<div id="configuration">
+    <h3>Configuration</h3>
+    <!-- code goes here -->
+</div>
+
+<div id="code"><!-- code goes here --></div>
+
+<div id="token"><!-- token goes here --></div>
+
+<div id="header"><!-- decoded id_token header goes here --></div>
+
+<div id="decoded"><!-- decoded id_token goes here --></div>
+
+<div id="signature"><!-- id_token signature goes here --></div>
+
+<div id="info"><!-- info goes here --></div>
+
+<div>
+    <hr>
+    <p align="center">
+        <a href="basic.html">Try basic profile again</a> |
+        <a href="implicit.html">Try implicit profile</a> |
+        <a href="index.html">Start over</a>
+    </p>
+</div>
+</body>
+</html>

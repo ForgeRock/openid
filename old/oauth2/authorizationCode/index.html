@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+! MPL 2.0 HEADER START
+!
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+! If applicable, add the following below this MPL 2.0 HEADER, replacing
+! the fields enclosed by brackets "[]" replaced with your own identifying
+! information:
+!     Portions Copyright [yyyy] [name of copyright owner]
+!
+! MPL 2.0 HEADER END
+!
+!     Copyright 2013-2014 ForgeRock AS
+!
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>The Authorization Code Flow</title>
+    <link rel="shortcut icon" href="http://forgerock.com/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="../../css/style.css">
+    <script type="text/javascript"
+            src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+</head>
+<body>
+
+<a id="logo" href="http://forgerock.org/"><a/>
+
+
+<h3>The Authorization Code Flow Start Page</h3>
+
+
+<p>The Authorization Code Flow is the default flow and most secure Oauth flow.
+    For using this flow, the client should be able for secure storage of the ClientID and ClientSecret.
+    Client applications with the code running in the server side can use this flow.</p>
+
+<p>Note: This example is not designed to protect the client secret, but
+   instead to show the results at each step in the process.</p>
+
+<div id="config">
+
+</div>
+<script type="text/javascript">
+
+    $.getJSON('../configurations.json', function(data) {
+
+        console.log(data);
+
+        $.each(data.configurations, function(key, config) {
+
+            if (config.redirect_uri.substring(0, 4) != "http") {
+                config.redirect_uri = document.URL.substr(0,document.URL.lastIndexOf('/'))  + "/" + config.redirect_uri;
+            }
+            var authRequestParameters = {
+                "response_type": "code",
+                "client_id": config.client_id,
+                "realm": config.realm,
+                "scope": config.scope,
+                "redirect_uri": config.redirect_uri,
+                "state": config.state
+            };
+            var url = config.openam_uri + authorize + "?" + encodeQueryData(authRequestParameters);
+
+            var link = $('<a></a>').text("Start authorization");
+            link.attr("href", url);
+            configDiv = createConfigDiv(config, true);
+            configDiv.append(link);
+
+            $("#config").append(configDiv);
+        });
+    });
+
+</script>
+
+</body>
+</html>
