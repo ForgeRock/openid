@@ -1,24 +1,22 @@
 {
   "configurations": [
     {
-      "name": "myGlobalConfig",
+      "id": "config1",
+      "name": "OAuth2 config on top realm",
       "scope": "openid profile",
       "client_id": "myClientID",
       "client_secret": "changeit",
       "openam_uri": "http://openam.example.com:8080/openam",
-      "realm": "/",
-      "state": "af0ifjsldkj",
-      "redirect_uri": "Client/callback.html"
+      "realm": "/"
     },
     {
+      "id": "configRealmA",
       "name": "configRealmA",
       "scope": "openid profile",
       "client_id": "myClientID",
       "client_secret": "changeit",
       "openam_uri": "http://openam.example.com:8080/openam",
-      "state": "wer2okfwej",
-      "realm": "realmA",
-      "redirect_uri": "Client/callback.html"
+      "realm": "realmA"
     }
   ]
 }

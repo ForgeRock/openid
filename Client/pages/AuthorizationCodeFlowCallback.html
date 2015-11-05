@@ -1,0 +1,60 @@
+<div ng-switch="isAuthorizationCodeError">
+    <div ng-switch-when="true">
+        <ng-include src="'templates/error.html'"></ng-include>
+    </div>
+    <div ng-switch-when="false">
+
+        <ng-include src="'templates/configuration.html'"></ng-include>
+
+        <section id="codeReceived">
+            <h2><a href="#codeReceived">Authorization code received with success!</a></h2>
+            <p class="lead">
+                OpenAM returned me the Authorization code and the state. Seems like everything went as expected. With this code,
+                I can ask for the access token, but I would need to give my credential too.
+            </p>
+        </section><!-- /#introduction -->
+
+        <div ng-switch="accessTokenRequest.status.isSent" >
+            <!-- Access token request not sent: we display a button for calling the access token endpoint -->
+            <div ng-switch-when="false">
+                <a class="btn btn-block btn-success" ng-click="askToken()">Ask for an access token</a>
+            </div>
+            <!-- Access token request sent: we analyse the result -->
+            <div ng-switch-when="true">
+
+                <div ng-switch="accessTokenRequest.status.responseReceive">
+                    <!-- We display the request we did -->
+                    <ng-include ng-init="request = accessTokenRequest" src="'templates/ajaxRequest.html'"></ng-include>
+
+                    <!-- We are still waiting from OpenAM, we display a waiting button -->
+                    <div ng-switch-when="false">
+                        <a class="btn btn-block btn-success"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</a>
+                    </div>
+
+                    <!-- We received a response from the ajax request -->
+                    <div ng-switch-when="true">
+
+                        <div ng-switch="accessTokenRequest.status.success" >
+
+                            <!-- The ajax request failed -->
+                            <div ng-switch-when="false">
+                                <ng-include ng-init="error = accessTokenRequest.response" src="'templates/error.html'"></ng-include>
+                            </div>
+
+                            <!-- The ajax request succeed -->
+                            <div ng-switch-when="true">
+                                <ng-include ng-init="response = accessTokenRequest.response; responseInfo = accessTokenRequest.responseInfo " src="'pages/accessTokenEndpointResponse.html'"></ng-include>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

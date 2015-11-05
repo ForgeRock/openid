@@ -1,8 +1,8 @@
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+	var forgerockApp = angular.module('forgerockApp', ['ngRoute']);
 
 	// configure our routes
-	scotchApp.config(function($routeProvider) {
+    forgerockApp.config(function($routeProvider) {
 		$routeProvider
 
             // route for the home page
@@ -20,7 +20,7 @@
 
     });
 
-    scotchApp.controller('resourcesController', function($scope, $http){
+    forgerockApp.controller('resourcesController', function($scope, $http){
 
         $scope.configurations = null;
         $http.get('resources/resources.json')
@@ -34,6 +34,6 @@
     });
 
     // create the controller and inject Angular's $scope
-    scotchApp.controller('mainController', function($scope) {
+    forgerockApp.controller('mainController', function($scope) {
     });
 

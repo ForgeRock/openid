@@ -16,6 +16,10 @@
             </thead>
             <tbody>
             <tr>
+                <td>id</td>
+                <td>{{config.id}}</td>
+            </tr>
+            <tr>
                 <td>scope</td>
                 <td>{{config.scope}}</td>
             </tr>
@@ -38,21 +42,14 @@
                 <td>realm</td>
                 <td>{{config.realm}}</td>
             </tr>
-            <tr>
-                <td>redirect_uri</td>
-                <td>{{config.redirect_uri}}</td>
-            </tr>
-            <tr>
-                <td>state</td>
-                <td>{{config.state}}</td>
-            </tr>
+
             </tbody>
         </table>
     </div><!-- /.table-responsive -->
 </div><!-- /.box-body -->
     <div ng-if="flowName !== undefined " class="startLink clearfix" style="display: block;">
 
-    <a class="btn btn-block btn-success" href="{{config.authorizationFlowURL}}">Start the {{flowName}}</a>
+    <a class="btn btn-block btn-success" href="{{config.flowURL}}">Start the {{flowName}}</a>
 
 </div><!-- /.box-footer -->
 </div>

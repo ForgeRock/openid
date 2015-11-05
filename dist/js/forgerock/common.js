@@ -37,6 +37,12 @@ var refreshTokenCookie="refreshTokenOpenAM";
 var idtokenTokenCookie="idTokenTokenOpenAM";
 var stateCookie="stateOpenAM";
 
+//different flows
+var authorizationCodeFlowID = "AC";
+var implicitFlowID = "I";
+var passwordGrantFlowID = "PG";
+var credentialGrantFlowID = "P";
+
 /* Returns the value of the named query string parameter. */
 function getParameterByName(name) {
     name        = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -59,8 +65,7 @@ function authHeader(user, password) {
     return "Basic " + hash;
 }
 
-function getConfiguration(configurationJson, state) {
-    var baseURL = document.URL.substr(0, document.URL.indexOf('/', document.URL.indexOf('/', 10) + 1));
+function getConfiguration(configurationJson, id) {
 
     var result;
 
@@ -72,57 +77,33 @@ function getConfiguration(configurationJson, state) {
 
             $.each(data.configurations, function(key, config) {
 
-                if (config.state == state) {
+                if (config.id == id) {
 
-                    if (config.redirect_uri.substring(0, 4) != "http") {
-                        config.redirect_uri = baseURL  + "/" + config.redirect_uri;
-                    }
                     result =  config;
                     return;
                 }
             });
             if ( typeof(result) == "undefined" || result == null ) {
-                console.log("config not found for " + state);
+                console.log("config '" + id + "' not found.");
             }
         }
     });
 
-
     return result;
 }
 
-function createConfigDiv(data) {
-
-    if (data.redirect_uri.substring(0, 4) != "http") {
-        data.redirect_uri = document.URL.substr(0,document.URL.lastIndexOf('/'))  + "/" + data.redirect_uri;
-    }
-
-    var configDiv = $('<div></div>').addClass("config");
-
-    var name = $('<h5></h5>').text(data.name);
-    var ul = $('<ul></ul>');
-
-    var scope = $('<li></li>').text("scope: " + data.scope);
-    var state = $('<li></li>').text("state: " + data.state);
-    var client_id = $('<li></li>').text("client_id: " + data.client_id);
-    var client_secret = $('<li></li>').text("client_secret: " + data.client_secret);
-    var openam_uri = $('<li></li>').text("openam_uri: " + data.openam_uri);
-    var realm = $('<li></li>').text("realm: " + data.realm);
-    var redirect_uri_li = $('<li></li>').text("redirect_uri: " + data.redirect_uri);
-
-    ul.append(realm);
-    ul.append(scope);
-    ul.append(state);
-    ul.append(client_id);
-    ul.append(client_secret);
-    ul.append(openam_uri);
-    ul.append(redirect_uri_li);
-
-    configDiv.append(name);
-    configDiv.append(ul);
-
-    return configDiv;
+function getStateInfo(state) {
+    var stateSplit = state.split(".");
+    return  {
+        "config": stateSplit[0],
+        "flow": stateSplit[1]
+    };
 }
+
+function getState(config, flow) {
+    return config.id + "." + flow;
+}
+
 
 
 // ...END CONFIGURATION
@@ -135,6 +116,19 @@ function encodeQueryData(data) {
             + encodeURIComponent(data[d]));
     }
     return ret.join("&");
+}
+
+/* Returns a map of parameters present in the document fragment. */
+function getParamsFromFragment() {
+    var params   = {};
+    var postBody = location.hash.substring(1);
+    var regex    = /([^&=]+)=([^&]*)/g, m;
+
+    while (m = regex.exec(postBody)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
+
+    return params;
 }
 
 /* Returns a map of query string parameters. */

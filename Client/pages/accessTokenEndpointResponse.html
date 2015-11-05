@@ -1,0 +1,100 @@
+
+<section id="accessTokenReceived">
+    <h2>Response from the access token endpoint received with success!</h2>
+    <p class="lead">
+        We can analyse the response from OpenAM.
+    </p>
+</section>
+
+<div ng-if="responseInfo.warnings.length > 0">
+    <ng-include ng-init="warnings = responseInfo.warnings" src="'templates/warnings.html'"></ng-include>
+</div>
+
+<div ng-show="responseInfo.isOpenid">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Access token result</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                    <tr>
+                        <th>key</th>
+                        <th>value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Response from OpenAM</td>
+                        <td><pre>{{response | json}}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>ID Token decoded header</td>
+                        <td><pre>{{responseInfo.openidTokenInfo.idTokenDecodedHeader | json}}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>ID Token decoded content</td>
+                        <td><pre>{{responseInfo.openidTokenInfo.idTokenDecodedContent | json}}</pre></td>
+                    </tr>
+                    <tr>
+                        <td>ID Token signature</td>
+                        <td><pre>{{responseInfo.openidTokenInfo.idTokenSignature | json}}</pre></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+    </div>
+</div>
+<p>For the purpose of this sample, we store the access token, refresh token (and id token if exist) in the cookie. Please note that the resource owner should not have to the access token and therefore, storing it in the
+    cookie is not recommended.</p>
+
+
+<div ng-show="cookieValues">
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Values stored in cookies</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin">
+                    <thead>
+                    <tr>
+                        <th>key</th>
+                        <th>value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Access Token</td>
+                        <td>{{cookieValues.accessToken}}</td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>{{cookieValues.state}}</td>
+                    </tr>
+                    <tr>
+                        <td>Refresh Token</td>
+                        <td>{{cookieValues.refreshToken}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID Token</td>
+                        <td>{{cookieValues.idToken}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+        </div><!-- /.box-body -->
+    </div>
+</div>
+
+<a class="btn btn-block btn-success" ng-click="storeAccessTokenInCookie()">Store OpenAM result in cookies</a>

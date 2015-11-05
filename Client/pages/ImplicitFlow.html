@@ -1,0 +1,20 @@
+<div class="content body">
+
+    <h1 >Implicit Flow</h1>
+
+
+    <p>Note: This example is not designed to protect the client secret, but
+        instead to show the results at each step in the process.</p>
+
+
+    <p>Select the configuration that you want to use for this flow:</p>
+
+    <div id="configurations"  ng-init="flowName = 'Implicit Flow'">
+        <div ng-repeat="(key, config) in configurations.configurations" class="configuration">
+
+            <ng-include src="'templates/configuration.html'"></ng-include>
+
+        </div>
+    </div>
+
+</div>
