@@ -17,6 +17,16 @@
       "client_secret": "changeit",
       "openam_uri": "http://openam.example.com:8080/openam",
       "realm": "realmA"
+    }, {
+      "id": "configPWD",
+      "name": "Password grant flow top realm",
+      "scope": "openid profile",
+      "client_id": "myClientID",
+      "client_secret": "changeit",
+      "username": "demo",
+      "password": "changeit",
+      "openam_uri": "http://openam.example.com:8080/openam",
+      "realm": "/"
     }
   ]
 }

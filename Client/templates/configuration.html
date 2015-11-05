@@ -6,50 +6,53 @@
         </div><!-- /.box-tools -->
     </div><!-- /.box-header -->
     <div class="box-body">
-    <div class="table-responsive">
-        <table class="table no-margin">
-            <thead>
-            <tr>
-                <th>Property</th>
-                <th>value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>id</td>
-                <td>{{config.id}}</td>
-            </tr>
-            <tr>
-                <td>scope</td>
-                <td>{{config.scope}}</td>
-            </tr>
-            <tr>
-                <td>client_id</td>
-                <td>{{config.client_id}}</td>
+        <div class="table-responsive">
+            <table class="table no-margin">
+                <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>id</td>
+                    <td>{{config.id}}</td>
+                </tr>
+                <tr>
+                    <td>scope</td>
+                    <td>{{config.scope}}</td>
+                </tr>
+                <tr>
+                    <td>client_id</td>
+                    <td>{{config.client_id}}</td>
 
-            </tr>
-            <tr>
-                <td>client_secret</td>
-                <td>{{config.client_secret}}</td>
+                </tr>
+                <tr>
+                    <td>client_secret</td>
+                    <td>{{config.client_secret}}</td>
 
-            </tr>
-            <tr>
-                <td>openam_uri</td>
-                <td>{{config.openam_uri}}</td>
+                </tr>
+                <tr>
+                    <td>openam_uri</td>
+                    <td>{{config.openam_uri}}</td>
 
-            </tr>
-            <tr>
-                <td>realm</td>
-                <td>{{config.realm}}</td>
-            </tr>
+                </tr>
+                <tr>
+                    <td>realm</td>
+                    <td>{{config.realm}}</td>
+                </tr>
 
-            </tbody>
-        </table>
-    </div><!-- /.table-responsive -->
-</div><!-- /.box-body -->
+                </tbody>
+            </table>
+        </div><!-- /.table-responsive -->
+    </div><!-- /.box-body -->
     <div ng-if="flowName !== undefined " class="startLink clearfix" style="display: block;">
-
-    <a class="btn btn-block btn-success" href="{{config.flowURL}}">Start the {{flowName}}</a>
-
-</div><!-- /.box-footer -->
+        <div ng-if="config.flowURL !== undefined " >
+            <a class="btn btn-block btn-success" href="{{config.flowURL}}">Start the {{flowName}}</a>
+        </div>
+        <div ng-if="config.flowURL === undefined " >
+            <a class="btn btn-block btn-success" ng-click="startFlow(config.id)">Start the {{flowName}}</a>
+        </div>
+    </div><!-- /.box-footer -->
 </div>
