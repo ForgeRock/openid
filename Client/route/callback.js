@@ -11,14 +11,14 @@ forgerockApp.config(['$routeProvider', '$locationProvider', function($routeProvi
 
     // route for the home page
     .when('/', {
-        controller  : 'mainController',
-        templateUrl : 'pages/callback.html'
+            templateUrl : 'pages/AuthorizationCodeFlowCallback.html',
+            controller  : 'mainController'
 
     })
-        .when('/access_token=:accessToken', {
-            templateUrl : 'pages/callback.html',
-            controller  : 'mainController'
-        })
+    .when('/access_token=:accessToken', {
+            templateUrl : 'pages/ImplicitFlowCallback.html',
+            controller  : 'implicitFlowController'
+    })
 
     ;
 }]);
@@ -28,8 +28,8 @@ forgerockApp.config(['$routeProvider', '$locationProvider', function($routeProvi
 forgerockApp.controller('mainController', ['$scope', '$http', 'CallBack', function($scope, $http, CallBack) {
     $scope.baseURL = baseURL;
 
+    $scope.OAuth2Flow = "authorizationCodeFlow";
     $scope.parameters = parseQueryString()
-
     $scope.state = getParameterByName("state");
     if ($scope.state == "") {
         $scope.isAuthorizationCodeError = true
@@ -38,23 +38,28 @@ forgerockApp.controller('mainController', ['$scope', '$http', 'CallBack', functi
     }
     $scope.stateInfo = getStateInfo($scope.state);
 
+    CallBack.authorizationCodeFlow($scope, $http);
 
-    if ($scope.stateInfo.flow === authorizationCodeFlowID) {
-        $scope.OAuth2Flow = "authorizationCodeFlow";
-        $scope.parameters = parseQueryString()
+}]);
 
-        CallBack.authorizationCodeFlow($scope, $http);
-    } else if( $scope.stateInfo.flow === implicitFlowID) {
-        $scope.OAuth2Flow = "implicitFlow";
-        $scope.parameters = getParamsFromFragment()
-        $scope.parameters["access_token"] = $scope.parameters["/access_token"]
-        delete $scope.parameters["/access_token"];
-        CallBack.implicitFlow($scope, $http);
-    } else {
+// create the controller and inject Angular's $scope
+forgerockApp.controller('implicitFlowController', ['$scope', '$http', 'CallBack', function($scope, $http, CallBack) {
+    $scope.baseURL = baseURL;
+
+    $scope.OAuth2Flow = "implicitFlow";
+    $scope.parameters = getParamsFromFragment()
+    $scope.parameters["access_token"] = $scope.parameters["/access_token"]
+    delete $scope.parameters["/access_token"];
+
+    $scope.state = $scope.parameters["state"];
+    if ($scope.state == "") {
         $scope.isAuthorizationCodeError = true
-        $scope.error = "Couldn't read the original flow from the state";
+        $scope.error = "The state is not returned by OpenAM";
         return;
     }
+    $scope.stateInfo = getStateInfo($scope.state);
+    CallBack.implicitFlow($scope, $http);
+
 }]);
 
 
