@@ -1,4 +1,3 @@
-var services = angular.module('services', []);
 // Callback factory
 services.factory('AccessToken', function() {
     var accessTokenFactory = {};
@@ -27,6 +26,18 @@ services.factory('AccessToken', function() {
                 console.log("Access token succeed. Returning :" + $scope.accessTokenRequest.response);
 
                 $scope.accessTokenRequest.responseInfo = accessTokenFactory.analyseAccessTokenEndpointResponse( $scope.accessTokenRequest.response.scope, $scope.accessTokenRequest.response.id_token, $scope.config);
+                $scope.storeAccessTokenInCookie = function() {
+                    setCookie(accessTokenCookie, $scope.accessTokenRequest.response.access_token, 1);
+                    setCookie(refreshTokenCookie, $scope.accessTokenRequest.response.refresh_token, 1);
+                    setCookie(idtokenTokenCookie, $scope.accessTokenRequest.response.id_token, 1);
+                    setCookie(stateCookie, $scope.state, 1);
+
+                    $scope.cookieValues = {};
+                    $scope.cookieValues.accessToken = getCookie(accessTokenCookie);
+                    $scope.cookieValues.refreshToken = getCookie(refreshTokenCookie);
+                    $scope.cookieValues.idToken = getCookie(idtokenTokenCookie);
+                    $scope.cookieValues.state = getCookie(stateCookie);
+                }
             },
             // The ajax request failed
             function errorCallback(response) {

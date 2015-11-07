@@ -2,6 +2,7 @@
 var forgerockApp = angular.module('forgerockApp', ['ngRoute', 'services']);
 var baseURL = document.URL.substr(0, document.URL.indexOf('/', document.URL.indexOf('/', 10) + 1));
 var redirect_uri = baseURL  + "/Client/callback.html" ;
+var services = angular.module('services', []);
 
 
 // configure our routes
@@ -129,22 +130,7 @@ services.factory('CallBack', ['AccessToken', function(AccessToken) {
 
         // Function call when you click on the button for converting the authorization code into an access token
         $scope.askToken = function() {
-
             AccessToken.callAccessTokenEndpoint($scope, $http);
-
-            // Store the access token in the
-            $scope.storeAccessTokenInCookie = function() {
-                setCookie(accessTokenCookie, $scope.accessTokenRequest.response.access_token, 1);
-                setCookie(refreshTokenCookie, $scope.accessTokenRequest.response.refresh_token, 1);
-                setCookie(idtokenTokenCookie, $scope.accessTokenRequest.response.id_token, 1);
-                setCookie(stateCookie, $scope.state, 1);
-
-                $scope.cookieValues = {};
-                $scope.cookieValues.accessToken = getCookie(accessTokenCookie);
-                $scope.cookieValues.refreshToken = getCookie(refreshTokenCookie);
-                $scope.cookieValues.idToken = getCookie(idtokenTokenCookie);
-                $scope.cookieValues.state = getCookie(stateCookie);
-            }
         }
     };
 
@@ -166,7 +152,6 @@ services.factory('CallBack', ['AccessToken', function(AccessToken) {
 
         $scope.accessTokenInfo = AccessToken.analyseAccessTokenEndpointResponse($scope.parameters["scope"], $scope.parameters["id_token"],  $scope.config);
 
-
         $scope.storeAccessTokenInCookie = function() {
             setCookie(accessTokenCookie, $scope.parameters["access_token"], 1);
             setCookie(refreshTokenCookie, $scope.parameters["refresh_token"], 1);
@@ -180,8 +165,6 @@ services.factory('CallBack', ['AccessToken', function(AccessToken) {
             $scope.cookieValues.state = getCookie(stateCookie);
         }
     };
-
-
 
     return callback;
 }]);
