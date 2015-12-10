@@ -14,7 +14,7 @@ OpenAM 11.0.0 and later.
 
 The examples are not secure. Instead they are completely transparent,
 showing the requests and the steps for the Basic and Implicit Profiles,
-showing how to register a client dynamically,
+showing how to register with OpenID Connect Dynamic Client Registration,
 and showing OpenAM as OP and Authenticator for GSMA Mobile Connect.
 (Mobile Connect support requires OpenAM 12 or later.)
 
@@ -23,4 +23,4 @@ This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-Copyright 2013-2014 ForgeRock AS
+Copyright 2013-2015 ForgeRock AS.

@@ -15,7 +15,7 @@
 !
 ! MPL 2.0 HEADER END
 !
-!     Copyright 2013-2014 ForgeRock AS
+!     Copyright 2013-2015 ForgeRock AS.
 !
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -59,10 +59,26 @@ $("#form").html(
 );
 </script>
 
-<p style="clear: both;">For dynamic registration you need an access token to
+<p style="clear: both;">For dynamic registration you might need an access token to
     write the configuration to OpenAM by HTTP POST. To obtain the access token,
     register an initial client statically after creating OpenID Connect
     provider, and then obtain the access token.</p>
+
+<blockquote>
+<h4>Tip</h4>
+<p>
+  In recent versions of OpenAM,
+  the console page for the OAuth2 Provider service configuration lets you enable
+  <strong>Allow Open Dynamic Client Registration</strong>,
+  so that no access token is required to register dynamically.
+</p>
+
+<p>
+  If you have enabled <strong>Allow Open Dynamic Client Registration</strong>,
+  then there is no need to get an access token.
+  Just click the Submit button.
+</p>
+</blockquote>
 
 <p>For example, if you register an OAuth 2.0 client in the top-level realm
     with name <code>myClientID</code> and client secret <code>password</code>,
@@ -95,7 +111,7 @@ $("#command").html(
     $("#form").submit(function () {
 
         var baseUrl = $("#baseUrl").val();
-        var configurationUrl = baseUrl + "/.well-known/openid-configuration";
+        var configurationUrl = baseUrl + "/oauth2/.well-known/openid-configuration";
         var registrationUrl = baseUrl + "/oauth2/connect/register"; // Default
         /*
          * Dynamic registration requires an access token from the provider
@@ -122,13 +138,16 @@ $("#command").html(
                         url: registrationUrl,
                         type: "POST",
                         beforeSend: function (xhr) {
+                          if (bearerToken) {
                             xhr.setRequestHeader(
                                     "Authorization", "Bearer " + bearerToken);
+                          }
                         },
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify({
-                            "redirect_uris": redirect_uris
+                            "redirect_uris": redirect_uris,
+                            "client_name": "Dynamically Registered Client"
                         })
                     }).done(function (data) {
                                 $("#info").html(
