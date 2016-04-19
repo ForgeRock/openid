@@ -1,5 +1,10 @@
 # OpenID Connect Examples
 
+## Warning
+**This code is not supported by ForgeRock and it is your responsibility to verify that the software is suitable and safe for use.**
+
+## About
+
 These simple examples use the OpenID Connect 1.0 provider support in
 OpenAM 11.0.0 and later.
 
