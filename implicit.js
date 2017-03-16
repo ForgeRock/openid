@@ -1,15 +1,9 @@
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright 2013-2017 ForgeRock AS. All Rights Reserved
  *
- * If applicable, add the following below this MPL 2.0 HEADER, replacing
- * the fields enclosed by brackets "[]" replaced with your own identifying
- * information:
- *     Portions Copyright [yyyy] [name of copyright owner]
- *
- *     Copyright 2013-2014 ForgeRock AS
- *
+ * Use of this code requires a commercial software license with ForgeRock AS.
+ * or with one of its affiliates. All use shall be exclusively subject
+ * to such license between the licensee and ForgeRock AS.
  */
 // START CONFIGURATION...
 
