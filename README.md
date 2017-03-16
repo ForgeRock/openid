@@ -1,5 +1,10 @@
 # OpenID Connect Examples
 
+This is one of the ForgeRock Community Projects.
+For details, see <https://stash.forgerock.org/projects/COM/repos/about-these-projects/browse>.
+
+If you are reading this on GitHub.com, you are viewing an old version of the project.
+
 ## Warning
 **This code is not supported by ForgeRock and it is your responsibility to verify that the software is suitable and safe for use.**
 
@@ -24,8 +29,8 @@ and showing OpenAM as OP and Authenticator for GSMA Mobile Connect.
 (Mobile Connect support requires OpenAM 12 or later.)
 
 * * *
-This Source Code Form is subject to the terms of the Mozilla Public
-License, v. 2.0. If a copy of the MPL was not distributed with this
-file, You can obtain one at http://mozilla.org/MPL/2.0/.
+Copyright 2013-2017 ForgeRock AS. All Rights Reserved
 
-Copyright 2013-2015 ForgeRock AS.
+Use of this code requires a commercial software license with ForgeRock AS.
+or with one of its affiliates. All use shall be exclusively subject
+to such license between the licensee and ForgeRock AS.
