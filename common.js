@@ -30,6 +30,12 @@ var client_id     = "myClientID";
 var client_secret = "password";
 var client_realm  = "/";
 
+// In case we want to use other realms (like /realm instead of /), 
+// this will allow basic flow to work properly.
+if(client_realm.length>1){
+    access = "/oauth2"+client_realm+"/access_token"
+}
+
 // ...END CONFIGURATION
 
 // http://stackoverflow.com/ has lots of useful snippets...
