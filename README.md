@@ -1,9 +1,6 @@
 # OpenID Connect Examples
 
-This is one of the ForgeRock Community Projects.
-For details, see <https://stash.forgerock.org/projects/COM/repos/about-these-projects/browse>.
-
-If you are reading this on GitHub.com, you are viewing an old version of the project.
+This is a ForgeRock Community Project.
 
 ## Warning
 **This code is not supported by ForgeRock and it is your responsibility to verify that the software is suitable and safe for use.**
